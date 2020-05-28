@@ -1,4 +1,4 @@
-FROM cloudfoundry/cflinuxfs2
+FROM cloudfoundry/cflinuxfs3
 
 ENV RUBY_PACKAGES bundler
 
