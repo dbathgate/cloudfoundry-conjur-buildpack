@@ -1,21 +1,31 @@
-FROM cloudfoundry/cflinuxfs2
+FROM cloudfoundry/cflinuxfs3
 
-ENV RUBY_PACKAGES bundler
+ENV WD_PATH="/conjurinc/cloudfoundry-conjur-buildpack" \
+    CI_PATH="/conjurinc/cloudfoundry-conjur-buildpack/ci"
 
-# Update and install all of the required packages.
-RUN gem install $RUBY_PACKAGES
+WORKDIR "$WD_PATH"
 
 # Install the Cloud Foundry CLI
-RUN apt-get update -y && apt-get install -y apt-transport-https ca-certificates openssl
-RUN wget -q -O - https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.key | apt-key add - && \
-    echo "deb https://packages.cloudfoundry.org/debian stable main" | tee /etc/apt/sources.list.d/cloudfoundry-cli.list && \
-    apt-get update -y && \
-    apt-get install -y cf-cli
+RUN apt-get update && \
+    apt-get install -y apt-transport-https \
+                       ca-certificates \
+                       openssl \
+                       ruby2.5-dev
 
-ENV WD_PATH /conjurinc/cloudfoundry-conjur-buildpack
-ENV CI_PATH $WD_PATH/ci
-RUN mkdir -p $CI_PATH
-WORKDIR $WD_PATH
+RUN wget -q https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.key && \
+    apt-key add cli.cloudfoundry.org.key && \
+    echo "deb https://packages.cloudfoundry.org/debian stable main" > /etc/apt/sources.list.d/cloudfoundry-cli.list && \
+    apt-get update && \
+    apt-get install -y cf-cli && \
 
-COPY Gemfile $CI_PATH
-RUN cd $CI_PATH && bundle install
+    mkdir -p "$CI_PATH" && \
+
+    gem install bundler && \
+    # This will prevent warnings about installing gems as root
+    bundle config --global silence_root_warning 1
+
+COPY Gemfile \
+     Gemfile.lock "$CI_PATH/"
+
+RUN cd "$CI_PATH" && \
+    bundle install
