@@ -80,6 +80,10 @@ AWS_REGION: us-east-1
 SSL_CERT: /tmp/ssl-cert.pem
 ```
 
+**Note:** Since the buildpack injects secrets into the application runtime environment using the [bash export method](https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html#index-export),
+environment variable names included in the secret.yml file **must** be valid shell variable names. In particular,
+they may contain upper or lowercase letters, numbers, and underscores **only**.
+
 #### Invoke the Installed Buildpack at Deploy Time
 
 When you deploy your application, ensure it is bound to a Conjur service instance and add the Conjur Buildpack to your `cf push` command:
