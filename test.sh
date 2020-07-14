@@ -7,19 +7,17 @@ function finish {
 }
 trap finish EXIT
 
-# set up the containers to run in their own namespace
+# Set up the containers to run in their own namespace
 COMPOSE_PROJECT_NAME="$(basename "$PWD")_$(openssl rand -hex 3)"
 export COMPOSE_PROJECT_NAME
 
 export BRANCH_NAME=${BRANCH_NAME:-$(git symbolic-ref --short HEAD)}
 
-# sets up conjur and retrieves credentials
+# Sets up conjur and retrieves credentials
 . ./setup-conjur.sh
 
-# Skip the integration tests if the Summon variables are not present
-if [ -z "$CF_API_ENDPOINT" ]; then
-    INTEGRATION_TAG="--tags ~@integration"
-else
+# Check for summon variables
+if [ -n "$CF_API_ENDPOINT" ]; then
     # Make sure all of the environment are present for the integration tests
     : ${CF_ADMIN_PASSWORD?"Need to set CF_ADMIN_PASSWORD"}
 
@@ -29,17 +27,27 @@ else
     popd
 fi  
 
-# build latest test images
+# Build latest test images
 docker-compose build
 
-# unpack latest build of buildpack
+# Unpack latest build of buildpack
 docker-compose run --rm tester bash ./unpack.sh
 
-# run tests against latest build of buildpack
-docker-compose run --rm \
- -w "$BUILDPACK_ROOT_DIR/ci" \
- tester cucumber \
- --format pretty \
- --format junit \
- --out ./features/reports \
- ${INTEGRATION_TAG}
+if [ -n "$CF_API_ENDPOINT" ]; then
+     # Run tests against latest build of buildpack (including integration tests against remote foundation)
+     docker-compose run --rm \
+         -w "$BUILDPACK_ROOT_DIR/ci" \
+         tester cucumber \
+         --format pretty \
+         --format junit \
+         --out ./features/reports
+else
+    # Skip the integration tests if the Summon variables are not present
+    docker-compose run --rm \
+        -w "$BUILDPACK_ROOT_DIR/ci" \
+        tester cucumber \
+        --format pretty \
+        --format junit \
+        --out ./features/reports \
+        --tags 'not @integration'
+fi

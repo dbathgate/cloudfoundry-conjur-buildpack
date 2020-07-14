@@ -1,4 +1,5 @@
 require 'fileutils'
+require_relative 'cf_helper'
 
 module BuildpackWorld
   include CfHelper
