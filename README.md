@@ -21,6 +21,11 @@ The buildpack supplies scripts to your application that do the following:
 
 + Your app must have a `secrets.yml` file in its root directory when deployed
 
++ If you are pushing multiple buildpacks using the CloudFoundry CLI, 
+  ensure that your CloudFoundry CLI version is greater than `6.38`. See 
+  the [CloudFoundry documentation on multiple buildpacks](https://docs.cloudfoundry.org/buildpacks/use-multiple-buildpacks.html)
+  for more information.
+
 ## How Does the Buildpack Work?
 
 The buildpack uses a [supply script](https://docs.cloudfoundry.org/buildpacks/understand-buildpacks.html#supply-script)
