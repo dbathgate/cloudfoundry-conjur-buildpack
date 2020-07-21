@@ -16,6 +16,9 @@ export BRANCH_NAME=${BRANCH_NAME:-$(git symbolic-ref --short HEAD)}
 # Sets up conjur and retrieves credentials
 . ./setup-conjur.sh
 
+# Run the install script to verify compatibility
+docker-compose run --rm tester bash ./lib/install_go.sh
+
 # Check for summon variables
 if [ -n "$CF_API_ENDPOINT" ]; then
     # Make sure all of the environment are present for the integration tests

@@ -5,7 +5,7 @@ services:
     image: buildpack-tester
     environment:
       BUILDPACK_BUILD_DIR: $BUILDPACK_ROOT_DIR/buildpack-build # tests run against the code in this directory
-      CF_STACK: cflinuxfs2
+      CF_STACK: cflinuxfs3
       CF_API_ENDPOINT: 
       CF_ADMIN_PASSWORD:
       BRANCH_NAME:
