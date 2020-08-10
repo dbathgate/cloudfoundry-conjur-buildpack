@@ -173,7 +173,7 @@ file may be configured by setting the `SECRETS_YAML_PATH` environment variable t
 its relative path.
 
 This can be configured in the application's `manifest.yml`:
-```
+```yaml
 ---
 applications:
 - name: my-app
