@@ -1,0 +1,147 @@
+#!/bin/bash -ex
+
+load "/tools/bats-support/load.bash"
+load "/tools/bats-assert/load.bash"
+
+# 001_retreive-secrets.sh tests
+#
+# Note: the secrets-retreival script runs the conjur-env from the home directory,
+# therefore any mock-scripts must be created relative to this path
+
+#
+# Utility Methods
+#
+
+# Create a copy of the script we wish to test
+TARGET_FILE="./lib/0001_retrieve-secrets.sh"
+TEST_FILE="./tmp/0001_retrieve-secrets.sh"
+cp ${TARGET_FILE} ${TEST_FILE}
+
+# Generate a script that can output variable settings to test against
+# $1 - Output file path
+# $2 - Contents of file with values unencoded. Each line of content should
+#      be of the form:
+#                 <variable>='<value>'
+# When the generated script is run, it should generate corresponding variable
+# settings but with values base64 encoded. That is, each line of output should
+# be of the form:
+#                 <variable>: <base64-encoded-value>
+function generate_env() {
+  # Exit early if no output directory or content was supplied
+  local path="${1}"
+  [[ -z "${path}" ]] && echo "Error: no output directory supplied" && return 1
+  shift
+  local contents=("$@")
+  [[ -z "${contents}" ]] && echo "Error: no contents supplied" && return 1
+
+  echo "Writing contents to ${path}..."
+  # This file will be ran from inside the secrets retrieval script, therefore
+  # we need it to echo its contents, since it won't be read statically
+  for line in "${contents[@]}"; do
+    if [[ $line =~ (.*):[[:space:]]*(.*) ]]; then
+        var="${BASH_REMATCH[1]}"
+        encoded_value="$(base64 <<< ${BASH_REMATCH[2]})"
+        echo "echo \"$var: $encoded_value\"" >> ${path}
+    else
+        echo "Error: '$line' does not match format <variable>='<value>'"
+        return 1
+    fi
+  done
+  chmod +x ${path}
+
+  [[ ! -s ${path} ]] && echo "Error: unable to generate test file" && return 1
+  echo "Test file $path generated" && return 0
+}
+
+# The secret retrieval script is sourced in production
+source_test_file() {
+  . "${TEST_FILE}"
+  env
+}
+
+#
+# Run Tests
+#
+
+@test "${TARGET_FILE}: good environment variables are exported to the environment" {
+  declare -a SETTINGS=('GOOD_VAR: good var 123 @#$%^ {}'
+                       "SINGLE_QUOTES: 'single' quotes"
+                       'DOUBLE_QUOTES: "double" quotes'
+                       'ATTEMPTED_CODE_INJECTION: Attempt injection;echo foobar'
+                       )
+
+  declare -x CONJUR_ENV_DIR=$(mktemp)
+
+  generate_env "${CONJUR_ENV_DIR}" "${SETTINGS[@]}"
+
+  run source_test_file
+
+  assert_success
+  assert_output -p "GOOD_VAR=good var 123 @#$%^ {}"
+  assert_output -p "SINGLE_QUOTES='single' quotes"
+  assert_output -p 'DOUBLE_QUOTES="double" quotes'
+  assert_output -p 'ATTEMPTED_CODE_INJECTION=Attempt injection;echo foobar'
+}
+
+@test "${TARGET_FILE}: bad environment variables cause a sanitized error to be thrown" {
+  declare -a SETTINGS=('"BAD.VAR": "bad.var"'
+                       '"2BADVAR": "2badvar"'
+                       '"1234": "1234"')
+
+  declare -x CONJUR_ENV_DIR=$(mktemp)
+
+  generate_env "${CONJUR_ENV_DIR}" "${SETTINGS[@]}"
+
+  run source_test_file
+
+  assert_failure
+  assert_output -p '`BAD.VAR`; value may not be a valid identifier'
+
+  # We should exit after the first error, so these variables shouldn't be present
+  refute_output -p '2BADVAR'
+  refute_output -p '1234'
+
+  # The values should not be present in the output
+  refute_output -p '2badvar'
+  refute_output -p 'bad.var'
+}
+
+@test "${TARGET_FILE}: error is thrown when the environment binary raises an error" {
+  declare -x CONJUR_ENV_DIR=$(mktemp)
+
+  echo ">&2 echo 'error fetching variable' && exit 1" > ${CONJUR_ENV_DIR}
+  chmod +x ${CONJUR_ENV_DIR}
+
+  run source_test_file
+
+  assert_failure
+  assert_output -p "error fetching variable"
+}
+
+@test "${TARGET_FILE}: error is thrown when binary provides values not matching the expected pattern" {
+  declare -a SETTINGS=('echo "BAD.VAR"="bad.var"'
+                       'echo "2BADVAR"="2badvar"'
+                       'echo "1234"="1234"')
+
+  declare -x CONJUR_ENV_DIR=$(mktemp)
+
+  echo "${SETTINGS[@]}" >> ${CONJUR_ENV_DIR}
+  chmod +x ${CONJUR_ENV_DIR}
+
+  run source_test_file
+
+  assert_failure
+  assert_output -p 'output is not of the form "<variable>: <base64-encoded-value>"'
+}
+
+@test "${TARGET_FILE}: random valid environment variables are exported silently" {
+  declare -x CONJUR_ENV_DIR="/cyberark/tmp/vendor/mock-conjur-env"
+
+  run source_test_file
+
+  # The conjur-mock-env binary generates a set number of randomly generated valid keys,
+  # outputting them in a way identical to our production conjur-env, so no error
+  # should be thrown
+  assert_success
+  refute_output -p 'is not a valid identifier'
+}

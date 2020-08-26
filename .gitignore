@@ -1,7 +1,19 @@
-*.zip
-ci/features/reports/
-buildpack-build/
+# IDE and OS artifacts
 .DS_Store
 .idea/
+
+# Packaging artifacts
+buildpack-build/
 vendor/
 cloudfoundry_conjur_buildpack/
+*.zip
+
+# Integration test artifacts
+ci/features/reports/
+
+# Unit test artifacts
+test
+TestReport-test.xml
+tmp/
+/ci/test-retrieve-secrets/temp_clone_dir/
+conjur-env/output

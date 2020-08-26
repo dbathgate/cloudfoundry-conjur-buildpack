@@ -1,0 +1,32 @@
+name: Unit Tests
+
+on:
+  # Run this on pushes to master
+  push:
+    branches:
+    - master
+
+  # Or when PR operations are done
+  pull_request:
+    types:
+    - opened
+    - reopened
+    - synchronize
+
+jobs:
+  test:
+    name: Golang Unit Tests
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Set up Go 1.13
+      uses: actions/setup-go@v2.0.1
+      with:
+        go-version: 1.13
+      id: go
+
+    - name: Check out code into the Go module directory
+      uses: actions/checkout@v2
+
+    - name: Run Golang unit tests
+      run: ci/test-unit
