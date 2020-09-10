@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 
 # Run conjur-env unit tests and scan with golint and vet
 # Output it placed in conjur-env/output
