@@ -1,3 +1,5 @@
+# CyberArk Conjur Buildpack
+
 The CyberArk Conjur Buildpack is a [supply buildpack](https://docs.cloudfoundry.org/buildpacks/understand-buildpacks.html#supply-script)
 that installs scripts to provide convenient and secure access to secrets stored
 in Conjur.
@@ -8,20 +10,22 @@ The buildpack supplies scripts to your application that do the following:
   file in the app root folder or [configured location](#secrets_yaml).
 
 + Retrieve credentials stored in your app's [`VCAP_SERVICES`](https://docs.run.pivotal.io/devguide/deploy-apps/environment-variable.html#VCAP-SERVICES)
-  environment variable to communicate with the bound `cyberark-conjur` service.
+  environment variable to communicate with the bound `cyberark-conjur` service
+  instance of the [Conjur Service Broker](https://github.com/cyberark/conjur-service-broker).
 
 + Authenticate using the Conjur credentials, fetch the relevant secrets from
   Conjur, and inject them into the session environment variables at the start of
   the app. The secrets are only available to the app process.
-
+  
 ## Requirements
 
 + Your app must be bound to a Conjur service instance. For more information on
-  binding your application to a Conjur service instance, see the [Conjur Service Broker documentation](https://github.com/cyberark/conjur-service-broker#bind-your-application-to-the-conjur-service)
+  binding your application to a Conjur service instance, see the [Conjur Service Broker documentation](https://github.com/cyberark/conjur-service-broker#bind-your-application-to-the-conjur-service).
 
-+ Your app must have a `secrets.yml` file in its root directory when deployed
++ Your app must have a `secrets.yml` file in its root directory or in a [configured location](#secrets_yaml).
 
-+ Using this buildpack **requires** using multiple buildpacks. To use Cloud Foundry
++ Using this buildpack **requires** using multiple buildpacks, because this is not a
+  final buildpack and your app will still need to also invoke a language buildpack. To use Cloud Foundry
   with multiple buildpacks, you **must** ensure your [Cloud Foundry CLI](https://github.com/cloudfoundry/cli)
   version is greater than `6.38`. See
   the [CloudFoundry documentation on multiple buildpacks](https://docs.cloudfoundry.org/buildpacks/use-multiple-buildpacks.html)
@@ -48,11 +52,8 @@ environment variables.
 
 The `conjur-env` binary leverages the [Conjur Go API](https://github.com/cyberark/conjur-api-go)
 and [Summon](https://github.com/cyberark/summon) to authenticate with Conjur and
-retrieve secrets.
-
-The buildpack has a cucumber test suite. This validates the functionality and
-also offers great insight into the intended functionality of the buildpack.
-Please see `./ci/features`.
+retrieve secrets using the application identity provided by the Conjur Service
+Broker.
 
 ## Getting Started
 
@@ -117,6 +118,33 @@ environment variable names included in the secret.yml file **must** be valid
 shell variable names. In particular, they may contain upper or lowercase letters,
 numbers, and underscores **only**.
 
+##### <a name="secrets_yaml"></a> Configuring the `secrets.yml` Location
+
+Some final buildpacks do not allow deploying the `secrets.yml` file to the application
+root directory at runtime. In this case, the runtime location of the `secrets.yml`
+file may be configured by setting the `SECRETS_YAML_PATH` environment variable to
+its relative path.
+
+This can be configured in the application's `manifest.yml`:
+```yaml
+---
+applications:
+- name: my-app
+  services:
+  - conjur
+  buildpacks:
+  - conjur_buildpack
+  - php_buildpack
+  env:
+    SECRETS_YAML_PATH: lib/secrets.yml
+```
+
+Alternatively, this may be set using the Cloud Foundry CLI:
+```
+$ cf set-env {Application Name} SECRETS_YAML_PATH {Relative Path to secrets.yml}
+$ cf restage {Application Name}
+```
+
 #### Invoke the Installed Buildpack at Deploy Time
 
 When you deploy your application, ensure it is bound to a Conjur service instance
@@ -144,7 +172,15 @@ When your application starts, the Conjur Buildpack will inject the secrets
 specified in the `secrets.yml` file into the application process as environment
 variables.
 
-#### <a name="online"></a> Invoking the Online Buildpack at Deploy Time
+**Note:** If you add the Conjur buildpack to your manifest or `cf push` command
+but don't also explicitly include the language buildpack, Cloud Foundry will see
+that the Conjur buildpack is not a "final buildpack" and will fail to invoke it.
+To use this buildpack, you **must** follow the instructions for
+[using multiple buildpacks](https://docs.cloudfoundry.org/buildpacks/use-multiple-buildpacks.html)
+and specify _both_ the Conjur buildpack **and** the final, language buildpack for
+your app (in that order).
+
+##### <a name="online"></a> Invoking the Online Buildpack at Deploy Time
 
 To use the CyberArk Conjur Buildpack as an online buildpack, use the GitHub
 repository address instead of specifying the installed buildpack name. This may
@@ -165,34 +201,7 @@ applications:
   - ruby_buildpack
 ```
 
-#### <a name="secrets_yaml"></a> Configuring the `secrets.yml` Location
-
-Some final buildpacks do not allow deploying the `secrets.yml` file to the application
-root directory at runtime. In this case, the runtime location of the `secrets.yml`
-file may be configured by setting the `SECRETS_YAML_PATH` environment variable to
-its relative path.
-
-This can be configured in the application's `manifest.yml`:
-```yaml
----
-applications:
-- name: my-app
-  services:
-  - conjur
-  buildpacks:
-  - conjur_buildpack
-  - php_buildpack
-  env:
-    SECRETS_YAML_PATH: lib/secrets.yml
-```
-
-Alternatively, this may be set using the Cloud Foundry CLI:
-```
-$ cf set-env {Application Name} SECRETS_YAML_PATH {Relative Path to secrets.yml}
-$ cf restage {Application Name}
-```
-
-## Development
+## Contributing
 
 We welcome contributions of all kinds to the Conjur Buildpack. For instructions on
 how to get started and descriptions of our development workflows, please see our
