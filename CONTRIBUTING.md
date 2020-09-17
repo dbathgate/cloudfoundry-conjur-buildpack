@@ -61,6 +61,10 @@ updated:
 
 ### Testing
 
+The buildpack has a cucumber test suite. This validates the functionality and
+also offers great insight into the intended functionality of the buildpack.
+Please see `./ci/features`.
+
 To test the usage of the Conjur Service Broker within a CF deployment, you can
 follow the demo scripts in the [Cloud Foundry demo repo](https://github.com/conjurinc/cloudfoundry-conjur-demo).
 
