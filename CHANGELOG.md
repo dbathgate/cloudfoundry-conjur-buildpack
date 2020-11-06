@@ -5,6 +5,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- Added sanity tests and additional validation of environment variable keys specified
+  in the `secrets.yml` to ensure compatibility with Bash commands
+
+### Security
+- Added custom handling to sanitize error messages related to retrieved secrets
+  being exported to the environment
 
 ## [2.1.4] - 2020-07-16
 

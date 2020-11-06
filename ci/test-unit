@@ -1,0 +1,22 @@
+#!/bin/bash -x
+
+# Run conjur-env unit tests and scan with golint and vet
+# Output it placed in conjur-env/output
+
+docker run \
+  -v $(pwd)/conjur-env:/cyberark \
+  -w /cyberark \
+  --rm golang \
+  sh -c '''
+  # Run golint
+  go get -u golang.org/x/lint/golint
+  golint -set_exit_status ./...
+
+  # Run go vet
+  go vet ./...
+
+  # Run unit test with coverage
+  go get -u github.com/jstemmer/go-junit-report
+  mkdir -p output
+  go test -coverprofile=output/c.out -v . | tee /dev/stderr | go-junit-report > output/junit.xml
+  '''

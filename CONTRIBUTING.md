@@ -91,6 +91,15 @@ file as needed and running:
 $ summon ./test.sh
 ```
 
+#### Testing `0001_retrieve-secrets.sh` 
+To test `0001_retrieve-secrets.sh` locally:
+
+```shell script
+$ ./ci/test-retrieve-secrets/start
+```
+
+See the [README.md](./ci/test-retrieve-secrets/README.md) for more information.
+
 ### Releasing
 
 1. Based on the unreleased content, determine the new version number and update the [VERSION](VERSION) file. This project uses [semantic versioning](https://semver.org/).

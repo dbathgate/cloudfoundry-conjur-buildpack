@@ -6,29 +6,26 @@ import (
 	"strings"
 )
 
-const DEVSHM = "/dev/shm"
+const devShmPath = "/dev/shm"
 
-type TempFactory struct {
+type tempFactory struct {
 	path  string
 	files []string
 }
 
 // Create a new temporary file factory.
-// defer Cleanup() if you want the files removed.
-func NewTempFactory(path string) TempFactory {
-	if path == "" {
-		path = DefaultTempPath()
-	}
-	return TempFactory{path: path}
+// defer cleanup() if you want the files removed.
+func newTempFactory() tempFactory {
+	return tempFactory{path: defaultTempPath()}
 }
 
 // Default temporary file path
 // Returns /dev/shm if it is a directory, otherwise home dir of current user
 // Else returns the system default
-func DefaultTempPath() string {
-	fi, err := os.Stat(DEVSHM)
+func defaultTempPath() string {
+	fi, err := os.Stat(devShmPath)
 	if err == nil && fi.Mode().IsDir() {
-		return DEVSHM
+		return devShmPath
 	}
 	home, err := os.UserHomeDir()
 	if err == nil {
@@ -39,8 +36,8 @@ func DefaultTempPath() string {
 }
 
 // Create a temp file with given value. Returns the path.
-func (tf *TempFactory) Push(bytes []byte) string {
-	f, _ := ioutil.TempFile(tf.path, ".summon")
+func (tf *tempFactory) push(bytes []byte) string {
+	f, _ := ioutil.TempFile(tf.path, ".conjur-env")
 	defer f.Close()
 
 	f.Write(bytes)
@@ -50,12 +47,12 @@ func (tf *TempFactory) Push(bytes []byte) string {
 }
 
 // Remove the temporary files created with this factory.
-func (tf *TempFactory) Cleanup() {
+func (tf *tempFactory) cleanup() {
 	for _, file := range tf.files {
 		os.Remove(file)
 	}
-	// Also remove the tempdir if it's not DEVSHM
-	if !strings.Contains(tf.path, DEVSHM) {
+	// Also remove the tempdir if it's not /dev/shm
+	if !strings.Contains(tf.path, devShmPath) {
 		os.Remove(tf.path)
 	}
 	tf = nil

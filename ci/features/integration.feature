@@ -30,8 +30,8 @@ Feature: Integrations Tests for PCF 2.4
       When I push a Java app with the offline buildpack
       Then the secrets.yml values are available in the app
 
-    # The online buildpack tests are only valid if the latest commits
-    # are push to the Github remote branch.
-    Scenario: Java online buildpack integration
-      When I push a Java app with the online buildpack
-      Then the secrets.yml values are available in the app
+#    # The online buildpack tests are only valid if the latest commits
+#    # are push to the Github remote branch.
+#    Scenario: Java online buildpack integration
+#      When I push a Java app with the online buildpack
+#      Then the secrets.yml values are available in the app

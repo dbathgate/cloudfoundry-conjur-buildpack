@@ -28,14 +28,35 @@ pipeline {
         archiveArtifacts artifacts: '*.zip', fingerprint: true
       }
     }
-    stage('Test') {
-      steps {
-        sh 'summon ./test.sh'
 
-        junit 'ci/features/reports/*.xml'
+    stage('Test') {
+      parallel {
+        stage('Integration Tests') {
+          steps {
+            sh 'summon ./test.sh'
+            junit 'ci/features/reports/*.xml'
+          }
+        }
+
+        stage('Unit Tests') {
+          stages {
+            stage("Secret Retrieval Script Tests") {
+              steps {
+                sh './ci/test-retrieve-secrets/start'
+                junit 'TestReport-test.xml'
+              }
+            }
+
+            stage("Conjur-Env Unit Tests") {
+              steps {
+                sh './ci/test-unit'
+                junit 'conjur-env/output/*.xml'
+              }
+            }
+          }
+        }
       }
     }
-
   }
 
   post {
