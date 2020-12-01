@@ -16,4 +16,5 @@ test
 TestReport-test.xml
 tmp/
 /ci/test-retrieve-secrets/temp_clone_dir/
+ci/conjur-env/output/
 conjur-env/output

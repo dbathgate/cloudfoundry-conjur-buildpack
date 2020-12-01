@@ -1,0 +1,15 @@
+#!/bin/bash -e
+function finish {
+  echo 'Removing environment'
+  echo '-----'
+  docker-compose down -v
+}
+trap finish EXIT
+
+cd "$(dirname $0)"
+
+# Run Conjur and wait for it to be up
+./start_conjur
+
+# Runs the cflinux3 image in interactive mode with the project files mounted
+docker-compose run --rm -e BUILDPACK_BUILD_DIR="/cyberark/cloudfoundry-conjur-buildpack/buildpack-build" tester bash

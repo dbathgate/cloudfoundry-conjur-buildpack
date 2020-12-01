@@ -1,7 +1,7 @@
 FROM cloudfoundry/cflinuxfs3
 
-ENV WD_PATH="/conjurinc/cloudfoundry-conjur-buildpack" \
-    CI_PATH="/conjurinc/cloudfoundry-conjur-buildpack/ci"
+ENV WD_PATH="/cyberark/cloudfoundry-conjur-buildpack" \
+    CI_PATH="/cyberark/cloudfoundry-conjur-buildpack/ci"
 
 WORKDIR "$WD_PATH"
 

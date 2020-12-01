@@ -1,0 +1,54 @@
+#!/bin/bash -ex
+
+#
+# Remote Integration Test Runner
+#
+# This runs only e2e features, which are those dependent on
+# access to a remote PCF instance. Run this script from the `ci`
+# directory with `summon ./test_e2e`, with
+# proper summon credentials.
+#
+
+function finish {
+  echo 'Removing environment'
+  echo '-----'
+  docker-compose down -v
+}
+trap finish EXIT
+
+cd "$(dirname "$0")"
+
+# Set up the containers to run in their own namespace
+COMPOSE_PROJECT_NAME="$(basename "$PWD")_$(openssl rand -hex 3)"
+export COMPOSE_PROJECT_NAME
+
+export BRANCH_NAME=${BRANCH_NAME:-$(git symbolic-ref --short HEAD)}
+
+# Sets up conjur and retrieves credentials
+. ./start_conjur
+
+# Run the install script to verify compatibility
+docker-compose run --rm tester bash ./lib/install_go.sh
+
+# Check for summon variables
+: ${CF_API_ENDPOINT?"Need to set CF_API_ENDPOINT"}
+
+# Build the Java CI application
+pushd apps/java
+  ./bin/build
+popd
+
+# Build latest test images
+docker-compose build
+
+# Unpack latest build of buildpack
+docker-compose run --rm tester bash ./unpack.sh
+
+ # Run tests against latest build of buildpack (including integration tests against remote foundation)
+ docker-compose run --rm \
+     -w "/cyberark/cloudfoundry-conjur-buildpack/ci" \
+     tester cucumber \
+     --format pretty \
+     --format junit \
+     --out ./features/reports \
+     --tags '@integration'
