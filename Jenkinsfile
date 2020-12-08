@@ -27,7 +27,7 @@ pipeline {
       }
     }
     
-    stage('Build buildpack') {
+    stage('Package Buildpack') {
       steps {
         sh './package.sh'
 
@@ -39,7 +39,14 @@ pipeline {
       parallel {
         stage('Integration Tests') {
           steps {
-            sh 'summon ./test.sh'
+            sh './ci/test_integration'
+            junit 'ci/features/reports/*.xml'
+          }
+        }
+
+        stage('End To End Tests') {
+          steps {
+            sh 'cd ci && summon ./test_e2e'
             junit 'ci/features/reports/*.xml'
           }
         }
@@ -55,7 +62,7 @@ pipeline {
 
             stage("Conjur-Env Unit Tests") {
               steps {
-                sh './ci/test-unit'
+                sh './ci/test_conjur-env'
                 junit 'conjur-env/output/*.xml'
               }
             }
