@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Deprecated
+- Support for using the Conjur Buildpack with Conjur Enterprise v4 is now deprecated.
+  Support will be removed in the next release.
+  [cyberark/cloudfoundry-conjur-buildpack#73](https://github.com/cyberark/cloudfoundry-conjur-buildpack/issues/73)
+
 ## [2.1.5] - 2020-11-06
 ### Added
 - Added sanity tests and additional validation of environment variable keys specified
