@@ -26,28 +26,20 @@ pipeline {
         }
       }
     }
-    
-    stage('Package Buildpack') {
-      steps {
-        sh './package.sh'
-
-        archiveArtifacts artifacts: '*.zip', fingerprint: true
-      }
-    }
 
     stage('Test') {
       parallel {
         stage('Integration Tests') {
           steps {
-            sh './ci/test_integration'
-            junit 'ci/features/reports/*.xml'
+            sh './bin/test_integration'
+            junit 'bin/features/reports/*.xml'
           }
         }
 
         stage('End To End Tests') {
           steps {
-            sh 'cd ci && summon ./test_e2e'
-            junit 'ci/features/reports/*.xml'
+            sh 'cd bin && summon ./test_e2e'
+            junit 'bin/features/reports/*.xml'
           }
         }
 
@@ -55,15 +47,15 @@ pipeline {
           stages {
             stage("Secret Retrieval Script Tests") {
               steps {
-                sh './ci/test-retrieve-secrets/start'
+                sh './bin/test-retrieve-secrets/start'
                 junit 'TestReport-test.xml'
               }
             }
 
             stage("Conjur-Env Unit Tests") {
               steps {
-                sh './ci/test_conjur-env'
-                junit 'conjur-env/output/*.xml'
+                sh './bin/test_conjur-env'
+                junit 'buildpack/conjur-env/output/*.xml'
               }
             }
           }

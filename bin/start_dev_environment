@@ -12,4 +12,4 @@ cd "$(dirname $0)"
 ./start_conjur
 
 # Runs the cflinux3 image in interactive mode with the project files mounted
-docker-compose run --rm -e BUILDPACK_BUILD_DIR="/cyberark/cloudfoundry-conjur-buildpack/buildpack-build" tester bash
+docker-compose run --rm -e BUILDPACK_BUILD_DIR="/cyberark/cloudfoundry-conjur-buildpack/buildpack" tester bash

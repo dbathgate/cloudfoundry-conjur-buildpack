@@ -13,7 +13,7 @@ load "/tools/bats-assert/load.bash"
 #
 
 # Create a copy of the script we wish to test
-TARGET_FILE="./lib/0001_retrieve-secrets.sh"
+TARGET_FILE="./buildpack/profile.d/0001_retrieve-secrets.sh"
 TEST_FILE="./tmp/0001_retrieve-secrets.sh"
 cp ${TARGET_FILE} ${TEST_FILE}
 

@@ -73,7 +73,7 @@ updated:
 
 The buildpack has a cucumber test suite. This validates the functionality and
 also offers great insight into the intended functionality of the buildpack.
-Please see `./ci/features`.
+Please see `./bin/features`.
 
 To test the usage of the Conjur Service Broker within a CF deployment, you can
 follow the demo scripts in the [Cloud Foundry demo repo](https://github.com/conjurinc/cloudfoundry-conjur-demo).
@@ -84,7 +84,7 @@ To test your changes within a running instance of [Cloud Foundry Stack](https://
 and Conjur, run:
 
 ```shell script
-./ci/start_dev_environment
+./bin/start_dev_environment
 ```
 
 This starts Conjur and Cloud Foundry Stack containers, and provides terminal
@@ -92,7 +92,7 @@ access to the Cloud Foundry container. You do not need to restart the container
 after you make changes to the project.
 
 To run the local `cucumber` tests within the development environment, run the following 
-command from the `ci` directory, within the container:
+command from the `bin` directory, within the container:
 
 ```shell script
 cucumber \
@@ -106,7 +106,7 @@ cucumber \
 
 To run the test suite on your local machine, first run:
 ```shell script
-./package.sh
+./build.sh
 ```
 
 This will create the conjur-env binary in the vendor dir and a ZIP of the project
@@ -123,22 +123,22 @@ To run all tests for the `conjur-env` Golang module *and* for
 `lib/0001_retrieve-secrets.sh`, you can run:
 
 ```shell script
-./ci/test_unit
+./bin/test_unit
 ```
 
 To run all tests for _only_ the `conjur-env` Golang module, run:
 
 ```shell script
-./ci/test_conjur-env
+./bin/test_conjur-env
 ```
 
 To run all tests for _only_ `0001_retrieve-secrets.sh`, run:
 
 ```shell script
-./ci/test-retrieve-secrets/start
+./bin/test-retrieve-secrets/start
 ```
 
-See the [README.md](./ci/test-retrieve-secrets/README.md) for more information.
+See the [README.md](./bin/test-retrieve-secrets/README.md) for more information.
 
 ### Local Integration Testing
 
@@ -147,7 +147,7 @@ which are the subset of `cucumber` integration tests not dependent
 on a remote PCF instance or privileged credentials. Run:
 
 ```shell script
-./ci/test_integration
+./bin/test_integration
 ```
 
 This starts Conjur and Cloud Foundry Stack containers, and 
@@ -161,14 +161,14 @@ These are provided as environment variables to the script:
 
 ```shell script
 export CF_API_ENDPOINT=https://api.sys.cloudfoundry.net
-CF_ADMIN_PASSWORD=... ./ci/test_e2e
+CF_ADMIN_PASSWORD=... ./bin/test_e2e
 ```
 
 These variables may also be provided using [Summon](https://cyberark.github.io/summon/)
 by updating the `bin/secrets.yml` file as needed and running:
 
 ```shell script
-cd ci && summon ./test_e2e
+cd bin && summon ./test_e2e
 ```
 
 This requires access to privileged credentials.
@@ -180,7 +180,7 @@ be cleaned up properly. To clean up leftover components from running
 integration tests on a remote PCF environment, run:
 
 ```shell script
-./ci/clear_ci_artifacts
+./bin/clear_ci_artifacts
 ```
 
 ## Releasing
@@ -188,7 +188,7 @@ integration tests on a remote PCF environment, run:
 1. Based on the unreleased content, determine the new version number and update the [VERSION](VERSION) file. This project uses [semantic versioning](https://semver.org/).
 1. Ensure the [changelog](CHANGELOG.md) is up to date with the changes included in the release.
 1. Ensure the [open source acknowledgements](NOTICES.txt) are up to date with the dependencies in the
-   [conjur-env binary](./conjur-env/go.mod), and update the file if there have been any new or changed dependencies
+   [conjur-env binary](cloudfoundry-conjur-buildpack/buildpack/conjur-env/go.mod), and update the file if there have been any new or changed dependencies
    since the last release.
 1. Commit these changes - `Bump version to x.y.z` is an acceptable commit message.
 1. Once your changes have been reviewed and merged into master, tag the version

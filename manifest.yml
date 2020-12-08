@@ -1,0 +1,19 @@
+---
+language: binary
+default_versions: []
+dependency_deprecation_dates: []
+dependencies: []
+pre_package: buildpack/conjur-env/build.sh
+include_files:
+- CHANGELOG.md
+- CONTRIBUTING.md
+- LICENSE
+- NOTICES.txt
+- README.md
+- VERSION
+- buildpack/bin/detect
+- buildpack/bin/supply
+- buildpack/lib/install_go.sh
+- buildpack/profile.d/0001_retrieve-secrets.sh
+- buildpack/vendor/conjur-env
+- manifest.yml

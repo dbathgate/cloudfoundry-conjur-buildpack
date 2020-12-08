@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Unit Test Runner
+
+./bin/test_conjur-env
+
+./bin/test-retrieve-secrets/start
