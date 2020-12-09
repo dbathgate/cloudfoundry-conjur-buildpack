@@ -26,12 +26,8 @@ export BRANCH_NAME=${BRANCH_NAME:-$(git symbolic-ref --short HEAD)}
 # Sets up conjur and retrieves credentials
 . ./start_conjur
 
-# Run the install script to verify compatibility
-docker-compose run --rm tester ./buildpack/lib/install_go.sh
-
 # Build latest test images
 docker-compose build
-
 # Skip the integration tests if the Summon variables are not present
 docker-compose run --rm \
     -w "/cyberark/cloudfoundry-conjur-buildpack/bin" \

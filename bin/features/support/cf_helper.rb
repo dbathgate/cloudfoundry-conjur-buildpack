@@ -40,7 +40,7 @@ module CfHelper
     cf_target(cf_ci_org, cf_ci_space)
     cf_auth('admin', ENV['CF_ADMIN_PASSWORD'])
 
-    username = "bin-user-#{SecureRandom.hex}"
+    username = "ci-user-#{SecureRandom.hex}"
     password = SecureRandom.hex
 
     ShellSession.execute(%(cf create-user "#{username}" "#{password}"))
@@ -59,7 +59,7 @@ module CfHelper
   def create_org
     cf_auth('admin', ENV['CF_ADMIN_PASSWORD'])
 
-    name = "bin-org-#{SecureRandom.hex}"
+    name = "ci-org-#{SecureRandom.hex}"
     ShellSession.execute(%(cf create-org #{name}))
     name
   end

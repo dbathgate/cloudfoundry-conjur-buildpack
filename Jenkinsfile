@@ -19,11 +19,16 @@ pipeline {
         grantIPAccess()
       }
     }
-    stage('Validate') {
-      parallel {
-        stage('Changelog') {
-          steps { sh './bin/parse-changelog.sh' }
-        }
+
+    stage('Validate Changelog') {
+      steps {
+        sh './bin/parse-changelog.sh'
+      }
+    }
+
+    stage('Package') {
+      steps {
+        sh './package.sh && ./unpack.sh'
       }
     }
 

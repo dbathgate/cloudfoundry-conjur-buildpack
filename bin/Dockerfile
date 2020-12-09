@@ -20,8 +20,9 @@ RUN wget -q https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.key &&
     apt-get install -y cf-cli
 
 # Install ruby dependencies
-RUN mkdir -p "$CI_PATH" && \
-    gem install bundler && \
+RUN gem update --system && \
+    mkdir -p "$CI_PATH" && \
+    gem install bundler -v 2.1.4 && \
     # This will prevent warnings about installing gems as root
     bundle config --global silence_root_warning 1
 

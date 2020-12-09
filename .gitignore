@@ -5,7 +5,7 @@
 # Packaging artifacts
 .bin/
 vendor/
-cloudfoundry_conjur_buildpack/
+conjur_buildpack/
 *.zip
 
 # Integration test artifacts

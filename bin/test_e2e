@@ -18,6 +18,9 @@ trap finish EXIT
 
 cd "$(dirname "$0")"
 
+# Check for summon variables
+: ${CF_API_ENDPOINT?"Need to set CF_API_ENDPOINT"}
+
 # Set up the containers to run in their own namespace
 COMPOSE_PROJECT_NAME="$(basename "$PWD")_$(openssl rand -hex 3)"
 export COMPOSE_PROJECT_NAME
@@ -27,12 +30,6 @@ export BRANCH_NAME=${BRANCH_NAME:-$(git symbolic-ref --short HEAD)}
 # Sets up conjur and retrieves credentials
 . ./start_conjur
 
-# Run the install script to verify compatibility
-docker-compose run --rm tester bash ./buildpack/lib/install_go.sh
-
-# Check for summon variables
-: ${CF_API_ENDPOINT?"Need to set CF_API_ENDPOINT"}
-
 # Build the Java CI application
 pushd apps/java
   ./bin/build
@@ -41,11 +38,11 @@ popd
 # Build latest test images
 docker-compose build
 
- # Run tests against latest build of buildpack (including integration tests against remote foundation)
- docker-compose run --rm \
-     -w "/cyberark/cloudfoundry-conjur-buildpack/bin" \
-     tester cucumber \
-     --format pretty \
-     --format junit \
-     --out ./features/reports \
-     --tags '@integration'
+# Run tests against latest build of buildpack (including integration tests against remote foundation)
+docker-compose run --rm \
+   -w "/cyberark/cloudfoundry-conjur-buildpack/bin" \
+   tester cucumber \
+   --format pretty \
+   --format junit \
+   --out ./features/reports \
+   --tags '@integration'

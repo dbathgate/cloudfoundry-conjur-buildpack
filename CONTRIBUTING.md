@@ -52,22 +52,24 @@ that are included in the `conjur-env` binary in the buildpack,
 make sure you have Go installed locally (at least version 1.12) and run:
 
 ```
-$ cd conjur-env/
+$ cd buildpack/conjur-env/
 $ go get github.com/cyberark/[repo]@v[version]
 ```
 
 This will automatically update go.mod and go.sum.
 
-Commit your changes, and the next time `./package.sh` is run the `vendor/conjur-env`
-directory will be created with updated dependencies.
+Commit your changes, and the next time `./buildpack/cojur-env/build.sh` is run the
+`buildpack/vendor/conjur-env`directory will be created with updated dependencies.
 
 When upgrading the version of Go for `conjur-env`, both the pre-built 
 offline version and online version need to be
 updated:
 
-- **Offline build:** Update the base image version in `./conjur-env/Dockerfile`
+- **Offline build:** Update the base image version in `.buildpack/conjur-env/Dockerfile`
 
-- **Online build:** Update the version and file hashes in `./lib/install_go.sh`. Available versions and hashes are available at https://buildpacks.cloudfoundry.org/#/buildpacks/.
+- **Online build:** Update the version and file hashes in `manifest.yml`. Available
+  versions and hashes are available at https://buildpacks.cloudfoundry.org/#/buildpacks/,
+  or see the manifest for the [official Go Buildpack](https://github.com/cloudfoundry/go-buildpack/blob/master/manifest.yml.
 
 ## Testing
 
@@ -106,11 +108,14 @@ cucumber \
 
 To run the test suite on your local machine, first run:
 ```shell script
-./build.sh
+./package.sh
+./unpack.sh
 ```
 
-This will create the conjur-env binary in the vendor dir and a ZIP of the project
-contents.
+This will create the conjur-env binary in the `buildpack/vendor`
+dir and a `ZIP` of the project contents. It will then unzip the
+project contents into a temporary directory against which the
+integration tests can run.
 
 ### Unit Testing
 
@@ -120,7 +125,7 @@ Unit tests are comprised of two categories:
 - Unit tests for `lib/0001_retrieve-secrets.sh`
 
 To run all tests for the `conjur-env` Golang module *and* for
-`lib/0001_retrieve-secrets.sh`, you can run:
+`buildpack/lib/0001_retrieve-secrets.sh`, you can run:
 
 ```shell script
 ./bin/test_unit
