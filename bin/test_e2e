@@ -10,9 +10,10 @@
 #
 
 # First, check for summon variables
-: ${CF_API_ENDPOINT?"Error: Need to set CF_API_ENDPOINT"}
+: "${CF_API_ENDPOINT?"Error: Need to set CF_API_ENDPOINT"}"
 
-cd "$(dirname $0)"
+cd "$(dirname "$0")"
+# shellcheck disable=SC1091
 . ./utils
 trap finish EXIT
 

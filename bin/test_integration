@@ -8,7 +8,8 @@
 # remote PCF instance, or any needed credentials.
 #
 
-cd "$(dirname $0)"
+cd "$(dirname "$0")"
+# shellcheck disable=SC1091
 . ./utils
 trap finish EXIT
 
@@ -18,8 +19,6 @@ start_conjur
 
 # If we're running in Jenkins, skip this step
 [[ -z $JENKINS_HOME ]] && package_and_unpack_buildpack
-
-../upload.sh
 
 announce 'Running Cucumber tests...'
 docker-compose \

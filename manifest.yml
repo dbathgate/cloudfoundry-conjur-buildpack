@@ -54,6 +54,7 @@ include_files:
 - NOTICES.txt
 - README.md
 - VERSION
+- bin/compile
 - bin/supply
 - lib/0001_retrieve-secrets.sh
 - vendor/conjur-env

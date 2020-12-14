@@ -64,11 +64,14 @@ When upgrading the version of Go for `conjur-env`, both the pre-built
 offline version and online version need to be
 updated:
 
-- **Offline build:** Update the base image version in `.buildpack/conjur-env/Dockerfile`
+* **Offline build:** Update the base image version in `.buildpack/conjur-env/Dockerfile`
 
-- **Online build:** Update the version and file hashes in `manifest.yml`. Available
-  versions and hashes are available at https://buildpacks.cloudfoundry.org/#/buildpacks/,
-  or see the manifest for the [official Go Buildpack](https://github.com/cloudfoundry/go-buildpack/blob/master/manifest.yml.
+* **Online build:** Update the version and file hashes in `manifest.yml`.
+  Available versions and hashes can be found [here][buildpacks],
+  or see the manifest for the [official Go Buildpack][go-buildpacks].
+
+[buildpacks]: https://buildpacks.cloudfoundry.org/#/buildpacks/
+[go-buildpack]: https://github.com/cloudfoundry/go-buildpack/blob/master/manifest.yml
 
 ## Testing
 
@@ -126,7 +129,7 @@ To run all tests for _only_ the `conjur-env` Golang module, run:
 To run all tests for _only_ `0001_retrieve-secrets.sh`, run:
 
 ```shell script
-./bin/retrieve-secrets/start
+./tests/retrieve-secrets/start
 ```
 
 See the [README.md](tests/retrieve-secrets/README.md) for more information.
@@ -178,8 +181,9 @@ integration tests on a remote PCF environment, run:
 
 1. Based on the unreleased content, determine the new version number and update the [VERSION](VERSION) file. This project uses [semantic versioning](https://semver.org/).
 1. Ensure the [changelog](CHANGELOG.md) is up to date with the changes included in the release.
-1. Ensure the [open source acknowledgements](NOTICES.txt) are up to date with the dependencies in the
-   [conjur-env binary](buildpack/conjur-env/go.mod), and update the file if there have been any new or changed dependencies
+1. Ensure the [open source acknowledgements](NOTICES.txt) are up to date with
+   the dependencies in the [conjur-env binary](buildpack/conjur-env/go.mod), and
+   update the file if there have been any new or changed dependencies
    since the last release.
 1. Commit these changes - `Bump version to x.y.z` is an acceptable commit message.
 1. Once your changes have been reviewed and merged into master, tag the version
@@ -188,8 +192,9 @@ integration tests on a remote PCF environment, run:
    on how to set this up. `vx.y.z` is an acceptable tag message.
 1. Push the tag: `git push vx.y.z` (or `git push origin vx.y.z` if you are working
    from your local machine).
-1. From a **clean checkout of master** run `./package.sh` to generate the release ZIP. Upload this ZIP file
-   to the GitHub release.
+1. From a **clean checkout of master** run `./package.sh` to generate the
+   release ZIP. Upload this ZIP file to the GitHub release.
 
-   **IMPORTANT** Do not upload any artifacts besides the ZIP to the GitHub release. At this time, the tile build
-   assumes the project ZIP is the only artifact.
+   **IMPORTANT** Do not upload any artifacts besides the ZIP to the GitHub
+   release. At this time, the tile build assumes the project ZIP is the only
+   artifact.

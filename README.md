@@ -89,6 +89,7 @@ This is recommended to ensure proper installation of the
 secret retrieval script.
 
 Alternatively, you can clone the entire repository, and run the following commands:
+
 ```shell
 ./package.sh
 ./upload.sh

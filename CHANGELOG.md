@@ -7,24 +7,25 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 ### Added
 - A [`manifest.yml`](./manifest.yml) has been added, allowing for
-  the usage of [buildpack-packager](https://github.com/cloudfoundry/buildpack-packager) 
-  and other native CloudFoundry features. Please refer to [`manifest.yml`](./manifest.yml)
-  for information on dependencies and deprecation notices thereof, as well as a list 
+  the usage of [buildpack-packager](https://github.com/cloudfoundry/buildpack-packager)
+  and other native CloudFoundry features. Please refer
+  to [`manifest.yml`](./manifest.yml) for information on
+  dependencies and deprecation notices thereof, as well as a list
   of files included in the Buildpack.
   [cyberark/cloudfoundry-conjur-buildpack#79](https://github.com/cyberark/cloudfoundry-conjur-buildpack/issues/79)
 
 ### Changed
-- The project has been reorganized to respect Cloudfoundry Buildpack best practices
-  and improve maintainability. This also should reduce overall build times, and slightly
-  reduces the size of the Conjur Buildpack `.ZIP`.
+- The project has been reorganized to respect Cloudfoundry Buildpack
+  best practices and improve maintainability. This also should
+  reduce overall build times, and slightly reduces the size
+  of the Conjur Buildpack `.ZIP`.
   [PR cyberark/cloudfoundry-conjur-buildpack#99](https://github.com/cyberark/cloudfoundry-conjur-buildpack/pull/99)
-- The default go version has been bumped to `1.15.x` in the manifest, with other
-  supported version listed as well. Previously, we manually detected the installed
-  Go version, and ran an `install_go.sh` script if no Go version was installed. Now,
+- The default go version has been bumped to `1.15.x` in the manifest,
+  with other supported version listed as well. Previously,
+  we manually detected the installed Go version, and ran an
+  `install_go.sh` script if no Go version was installed. Now,
   this action is performed automatically as part of the Buildpack process.
   [cyberark/cloudfoundry-conjur-buildpack#41](https://github.com/cyberark/cloudfoundry-conjur-buildpack/issues/41)
-- `go.mod` dependencies and their respective entries in `NOTICES.txt` have been updated.
-  [cyberark/cloudfoundry-conjur-buildpack#92](https://github.com/cyberark/cloudfoundry-conjur-buildpack/issues/92)
 
 ## [2.1.5] - 2020-11-06
 ### Added
