@@ -1,4 +1,5 @@
 #!/bin/bash -e
+
 function finish {
   echo 'Removing environment'
   echo '-----'

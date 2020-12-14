@@ -1,4 +1,4 @@
-#!/bin/bash -ex
+#!/bin/bash -e
 
 #
 # Remote Integration Test Runner
@@ -9,40 +9,34 @@
 # proper summon credentials.
 #
 
-function finish {
-  echo 'Removing environment'
-  echo '-----'
-  docker-compose down -v
-}
+# First, check for summon variables
+: ${CF_API_ENDPOINT?"Error: Need to set CF_API_ENDPOINT"}
+
+cd "$(dirname $0)"
+. ./utils
 trap finish EXIT
 
-cd "$(dirname "$0")"
+setup_env
+build_test_images
+start_conjur
 
-# Check for summon variables
-: ${CF_API_ENDPOINT?"Need to set CF_API_ENDPOINT"}
+# If we're running in Jenkins, skip this step
+[[ -z $JENKINS_HOME ]] && package_and_unpack_buildpack
 
-# Set up the containers to run in their own namespace
-COMPOSE_PROJECT_NAME="$(basename "$PWD")_$(openssl rand -hex 3)"
-export COMPOSE_PROJECT_NAME
-
-export BRANCH_NAME=${BRANCH_NAME:-$(git symbolic-ref --short HEAD)}
-
-# Sets up conjur and retrieves credentials
-. ./start_conjur
-
-# Build the Java CI application
-pushd apps/java
+announce 'Building the Java test application...'
+pushd ../tests/integration/apps/java
   ./bin/build
 popd
 
-# Build latest test images
-docker-compose build
-
+announce 'Running Cucumber tests...'
 # Run tests against latest build of buildpack (including integration tests against remote foundation)
-docker-compose run --rm \
-   -w "/cyberark/cloudfoundry-conjur-buildpack/bin" \
-   tester cucumber \
-   --format pretty \
-   --format junit \
-   --out ./features/reports \
-   --tags '@integration'
+docker-compose \
+    -f "$DOCKER_COMPOSE_FILE" \
+    run --rm \
+    -w "$CONTAINER_FEATURES_DIR" \
+    tester cucumber \
+    --publish-quiet \
+    --format pretty \
+    --format junit \
+    --out "./reports/e2e" \
+    --tags '@integration'

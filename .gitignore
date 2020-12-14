@@ -9,12 +9,13 @@ conjur_buildpack/
 *.zip
 
 # Integration test artifacts
-bin/features/reports/
+tests/integration/features/reports/
+tests/Gemfile.lock
 
 # Unit test artifacts
 ./test
 TestReport-test.xml
 tmp/
-bin/test-retrieve-secrets/temp_clone_dir
+tests/retrieve-secrets/temp_clone_dir
 bin/conjur-env/output/
 buildpack/conjur-env/output

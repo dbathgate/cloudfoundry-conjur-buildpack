@@ -37,14 +37,14 @@ pipeline {
         stage('Integration Tests') {
           steps {
             sh './bin/test_integration'
-            junit 'bin/features/reports/*.xml'
+            junit 'tests/integration/reports/integration/*.xml'
           }
         }
 
         stage('End To End Tests') {
           steps {
-            sh 'cd bin && summon ./test_e2e'
-            junit 'bin/features/reports/*.xml'
+            sh 'summon -f ./bin/secrets.yml ./bin/test_e2e'
+            junit 'tests/integration/reports/e2e/*.xml'
           }
         }
 
@@ -52,7 +52,7 @@ pipeline {
           stages {
             stage("Secret Retrieval Script Tests") {
               steps {
-                sh './bin/test-retrieve-secrets/start'
+                sh './tests/retrieve-secrets/start'
                 junit 'TestReport-test.xml'
               }
             }

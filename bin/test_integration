@@ -1,4 +1,4 @@
-#!/bin/bash -ex
+#!/bin/bash -e
 
 #
 # Local Integration Test Runner
@@ -8,31 +8,27 @@
 # remote PCF instance, or any needed credentials.
 #
 
-function finish {
-  echo 'Removing environment'
-  echo '-----'
-  docker-compose down -v
-}
+cd "$(dirname $0)"
+. ./utils
 trap finish EXIT
 
-cd "$(dirname $0)"
+setup_env
+build_test_images
+start_conjur
 
-# Set up the containers to run in their own namespace
-COMPOSE_PROJECT_NAME="$(basename "$PWD")_$(openssl rand -hex 3)"
-export COMPOSE_PROJECT_NAME
+# If we're running in Jenkins, skip this step
+[[ -z $JENKINS_HOME ]] && package_and_unpack_buildpack
 
-export BRANCH_NAME=${BRANCH_NAME:-$(git symbolic-ref --short HEAD)}
+../upload.sh
 
-# Sets up conjur and retrieves credentials
-. ./start_conjur
-
-# Build latest test images
-docker-compose build
-# Skip the integration tests if the Summon variables are not present
-docker-compose run --rm \
-    -w "/cyberark/cloudfoundry-conjur-buildpack/bin" \
+announce 'Running Cucumber tests...'
+docker-compose \
+    -f "$DOCKER_COMPOSE_FILE" \
+    run --rm \
+    -w "$CONTAINER_FEATURES_DIR" \
     tester cucumber \
+    --publish-quiet \
     --format pretty \
     --format junit \
-    --out ./features/reports \
+    --out "./reports/integration" \
     --tags 'not @integration'

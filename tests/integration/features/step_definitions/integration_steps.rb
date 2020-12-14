@@ -8,7 +8,7 @@ Given("I install the buildpack") do
   cf_auth('admin', ENV['CF_ADMIN_PASSWORD'])
 
   Dir.chdir('..') do
-    ShellSession.execute('./upload.sh', 'BUILDPACK_NAME' => cf_ci_buildpack_name)
+    ShellSession.execute('../upload.sh', 'BUILDPACK_NAME' => cf_ci_buildpack_name)
   end
 end
 

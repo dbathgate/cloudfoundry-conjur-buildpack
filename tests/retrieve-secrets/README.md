@@ -9,7 +9,7 @@ To start the tests for this suite, run:
 ```
 or
 ```shell script
-./bin/test-retrieve-secrets/start
+./bin/retrieve-secrets/start
 ```
 depending on your current working directory.
 

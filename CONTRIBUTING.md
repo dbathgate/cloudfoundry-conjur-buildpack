@@ -13,7 +13,6 @@ pull request workflow, please see the [community repo](https://github.com/cybera
 * [Updating the `conjur-env` Binary](#updating-the-conjur-env-binary)
 * [Testing](#testing)
   + [Running the Dev Environment](#running-the-dev-environment)
-  + [Setup](#setup)
   + [Unit Testing](#unit-testing)
   + [Local Integration Testing](#local-integration-testing)
   + [End to End Testing](#end-to-end-testing)
@@ -58,7 +57,7 @@ $ go get github.com/cyberark/[repo]@v[version]
 
 This will automatically update go.mod and go.sum.
 
-Commit your changes, and the next time `./buildpack/cojur-env/build.sh` is run the
+Commit your changes, and the next time `./buildpack/conjur-env/build.sh` is run the
 `buildpack/vendor/conjur-env`directory will be created with updated dependencies.
 
 When upgrading the version of Go for `conjur-env`, both the pre-built 
@@ -75,7 +74,7 @@ updated:
 
 The buildpack has a cucumber test suite. This validates the functionality and
 also offers great insight into the intended functionality of the buildpack.
-Please see `./bin/features`.
+Please see `./tests/features`.
 
 To test the usage of the Conjur Service Broker within a CF deployment, you can
 follow the demo scripts in the [Cloud Foundry demo repo](https://github.com/conjurinc/cloudfoundry-conjur-demo).
@@ -94,7 +93,7 @@ access to the Cloud Foundry container. You do not need to restart the container
 after you make changes to the project.
 
 To run the local `cucumber` tests within the development environment, run the following 
-command from the `bin` directory, within the container:
+command from the `tests/integration` directory, within the container:
 
 ```shell script
 cucumber \
@@ -103,19 +102,6 @@ cucumber \
     --out ./features/reports \
     --tags 'not @integration'
 ```
-
-### Setup
-
-To run the test suite on your local machine, first run:
-```shell script
-./package.sh
-./unpack.sh
-```
-
-This will create the conjur-env binary in the `buildpack/vendor`
-dir and a `ZIP` of the project contents. It will then unzip the
-project contents into a temporary directory against which the
-integration tests can run.
 
 ### Unit Testing
 
@@ -140,10 +126,10 @@ To run all tests for _only_ the `conjur-env` Golang module, run:
 To run all tests for _only_ `0001_retrieve-secrets.sh`, run:
 
 ```shell script
-./bin/test-retrieve-secrets/start
+./bin/retrieve-secrets/start
 ```
 
-See the [README.md](./bin/test-retrieve-secrets/README.md) for more information.
+See the [README.md](tests/retrieve-secrets/README.md) for more information.
 
 ### Local Integration Testing
 
@@ -173,7 +159,7 @@ These variables may also be provided using [Summon](https://cyberark.github.io/s
 by updating the `bin/secrets.yml` file as needed and running:
 
 ```shell script
-cd bin && summon ./test_e2e
+summon -f ./bin/secrets.yml ./bin/test_e2e
 ```
 
 This requires access to privileged credentials.
@@ -193,7 +179,7 @@ integration tests on a remote PCF environment, run:
 1. Based on the unreleased content, determine the new version number and update the [VERSION](VERSION) file. This project uses [semantic versioning](https://semver.org/).
 1. Ensure the [changelog](CHANGELOG.md) is up to date with the changes included in the release.
 1. Ensure the [open source acknowledgements](NOTICES.txt) are up to date with the dependencies in the
-   [conjur-env binary](cloudfoundry-conjur-buildpack/buildpack/conjur-env/go.mod), and update the file if there have been any new or changed dependencies
+   [conjur-env binary](buildpack/conjur-env/go.mod), and update the file if there have been any new or changed dependencies
    since the last release.
 1. Commit these changes - `Bump version to x.y.z` is an acceptable commit message.
 1. Once your changes have been reviewed and merged into master, tag the version
