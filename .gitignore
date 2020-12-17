@@ -3,18 +3,18 @@
 .idea/
 
 # Packaging artifacts
-buildpack-build/
+.bin/
 vendor/
-cloudfoundry_conjur_buildpack/
+conjur_buildpack/
 *.zip
 
 # Integration test artifacts
-ci/features/reports/
+tests/integration/
+*.xml
+tests/Gemfile.lock
 
 # Unit test artifacts
-test
-TestReport-test.xml
+./test
 tmp/
-/ci/test-retrieve-secrets/temp_clone_dir/
-ci/conjur-env/output/
-conjur-env/output
+tests/retrieve-secrets/temp_clone_dir
+buildpack/conjur-env/output

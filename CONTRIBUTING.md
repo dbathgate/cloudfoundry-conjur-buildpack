@@ -13,7 +13,6 @@ pull request workflow, please see the [community repo](https://github.com/cybera
 * [Updating the `conjur-env` Binary](#updating-the-conjur-env-binary)
 * [Testing](#testing)
   + [Running the Dev Environment](#running-the-dev-environment)
-  + [Setup](#setup)
   + [Unit Testing](#unit-testing)
   + [Local Integration Testing](#local-integration-testing)
   + [End to End Testing](#end-to-end-testing)
@@ -52,28 +51,33 @@ that are included in the `conjur-env` binary in the buildpack,
 make sure you have Go installed locally (at least version 1.12) and run:
 
 ```
-$ cd conjur-env/
+$ cd buildpack/conjur-env/
 $ go get github.com/cyberark/[repo]@v[version]
 ```
 
 This will automatically update go.mod and go.sum.
 
-Commit your changes, and the next time `./package.sh` is run the `vendor/conjur-env`
-directory will be created with updated dependencies.
+Commit your changes, and the next time `./buildpack/conjur-env/build.sh` is run the
+`buildpack/vendor/conjur-env`directory will be created with updated dependencies.
 
 When upgrading the version of Go for `conjur-env`, both the pre-built 
 offline version and online version need to be
 updated:
 
-- **Offline build:** Update the base image version in `./conjur-env/Dockerfile`
+* **Offline build:** Update the base image version in `.buildpack/conjur-env/Dockerfile`
 
-- **Online build:** Update the version and file hashes in `./lib/install_go.sh`. Available versions and hashes are available at https://buildpacks.cloudfoundry.org/#/buildpacks/.
+* **Online build:** Update the version and file hashes in `manifest.yml`.
+  Available versions and hashes can be found [here][buildpacks],
+  or see the manifest for the [official Go Buildpack][go-buildpacks].
+
+[buildpacks]: https://buildpacks.cloudfoundry.org/#/buildpacks/
+[go-buildpack]: https://github.com/cloudfoundry/go-buildpack/blob/master/manifest.yml
 
 ## Testing
 
 The buildpack has a cucumber test suite. This validates the functionality and
 also offers great insight into the intended functionality of the buildpack.
-Please see `./ci/features`.
+Please see `./tests/features`.
 
 To test the usage of the Conjur Service Broker within a CF deployment, you can
 follow the demo scripts in the [Cloud Foundry demo repo](https://github.com/conjurinc/cloudfoundry-conjur-demo).
@@ -84,7 +88,7 @@ To test your changes within a running instance of [Cloud Foundry Stack](https://
 and Conjur, run:
 
 ```shell script
-./ci/start_dev_environment
+./bin/start_dev_environment
 ```
 
 This starts Conjur and Cloud Foundry Stack containers, and provides terminal
@@ -92,7 +96,7 @@ access to the Cloud Foundry container. You do not need to restart the container
 after you make changes to the project.
 
 To run the local `cucumber` tests within the development environment, run the following 
-command from the `ci` directory, within the container:
+command from the `tests/integration` directory, within the container:
 
 ```shell script
 cucumber \
@@ -102,16 +106,6 @@ cucumber \
     --tags 'not @integration'
 ```
 
-### Setup
-
-To run the test suite on your local machine, first run:
-```shell script
-./package.sh
-```
-
-This will create the conjur-env binary in the vendor dir and a ZIP of the project
-contents.
-
 ### Unit Testing
 
 Unit tests are comprised of two categories:
@@ -120,25 +114,25 @@ Unit tests are comprised of two categories:
 - Unit tests for `lib/0001_retrieve-secrets.sh`
 
 To run all tests for the `conjur-env` Golang module *and* for
-`lib/0001_retrieve-secrets.sh`, you can run:
+`buildpack/lib/0001_retrieve-secrets.sh`, you can run:
 
 ```shell script
-./ci/test_unit
+./bin/test_unit
 ```
 
 To run all tests for _only_ the `conjur-env` Golang module, run:
 
 ```shell script
-./ci/test_conjur-env
+./bin/test_conjur-env
 ```
 
 To run all tests for _only_ `0001_retrieve-secrets.sh`, run:
 
 ```shell script
-./ci/test-retrieve-secrets/start
+./tests/retrieve-secrets/start
 ```
 
-See the [README.md](./ci/test-retrieve-secrets/README.md) for more information.
+See the [README.md](tests/retrieve-secrets/README.md) for more information.
 
 ### Local Integration Testing
 
@@ -147,7 +141,7 @@ which are the subset of `cucumber` integration tests not dependent
 on a remote PCF instance or privileged credentials. Run:
 
 ```shell script
-./ci/test_integration
+./bin/test_integration
 ```
 
 This starts Conjur and Cloud Foundry Stack containers, and 
@@ -161,14 +155,14 @@ These are provided as environment variables to the script:
 
 ```shell script
 export CF_API_ENDPOINT=https://api.sys.cloudfoundry.net
-CF_ADMIN_PASSWORD=... ./ci/test_e2e
+CF_ADMIN_PASSWORD=... ./bin/test_e2e
 ```
 
 These variables may also be provided using [Summon](https://cyberark.github.io/summon/)
 by updating the `bin/secrets.yml` file as needed and running:
 
 ```shell script
-cd ci && summon ./test_e2e
+summon -f ./bin/secrets.yml ./bin/test_e2e
 ```
 
 This requires access to privileged credentials.
@@ -180,15 +174,16 @@ be cleaned up properly. To clean up leftover components from running
 integration tests on a remote PCF environment, run:
 
 ```shell script
-./ci/clear_ci_artifacts
+./bin/clear_ci_artifacts
 ```
 
 ## Releasing
 
 1. Based on the unreleased content, determine the new version number and update the [VERSION](VERSION) file. This project uses [semantic versioning](https://semver.org/).
 1. Ensure the [changelog](CHANGELOG.md) is up to date with the changes included in the release.
-1. Ensure the [open source acknowledgements](NOTICES.txt) are up to date with the dependencies in the
-   [conjur-env binary](./conjur-env/go.mod), and update the file if there have been any new or changed dependencies
+1. Ensure the [open source acknowledgements](NOTICES.txt) are up to date with
+   the dependencies in the [conjur-env binary](buildpack/conjur-env/go.mod), and
+   update the file if there have been any new or changed dependencies
    since the last release.
 1. Commit these changes - `Bump version to x.y.z` is an acceptable commit message.
 1. Once your changes have been reviewed and merged into master, tag the version
@@ -197,8 +192,9 @@ integration tests on a remote PCF environment, run:
    on how to set this up. `vx.y.z` is an acceptable tag message.
 1. Push the tag: `git push vx.y.z` (or `git push origin vx.y.z` if you are working
    from your local machine).
-1. From a **clean checkout of master** run `./package.sh` to generate the release ZIP. Upload this ZIP file
-   to the GitHub release.
+1. From a **clean checkout of master** run `./package.sh` to generate the
+   release ZIP. Upload this ZIP file to the GitHub release.
 
-   **IMPORTANT** Do not upload any artifacts besides the ZIP to the GitHub release. At this time, the tile build
-   assumes the project ZIP is the only artifact.
+   **IMPORTANT** Do not upload any artifacts besides the ZIP to the GitHub
+   release. At this time, the tile build assumes the project ZIP is the only
+   artifact.

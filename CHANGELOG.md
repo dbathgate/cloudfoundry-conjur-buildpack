@@ -5,6 +5,27 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- A [`manifest.yml`](./manifest.yml) has been added, allowing for
+  the usage of [buildpack-packager](https://github.com/cloudfoundry/buildpack-packager)
+  and other native CloudFoundry features. Please refer
+  to [`manifest.yml`](./manifest.yml) for information on
+  dependencies and deprecation notices thereof, as well as a list
+  of files included in the Buildpack.
+  [cyberark/cloudfoundry-conjur-buildpack#79](https://github.com/cyberark/cloudfoundry-conjur-buildpack/issues/79)
+
+### Changed
+- The project has been reorganized to respect Cloudfoundry Buildpack
+  best practices and improve maintainability. This also should
+  reduce overall build times, and slightly reduces the size
+  of the Conjur Buildpack `.ZIP`.
+  [PR cyberark/cloudfoundry-conjur-buildpack#99](https://github.com/cyberark/cloudfoundry-conjur-buildpack/pull/99)
+- The default go version has been bumped to `1.15.x` in the manifest,
+  with other supported version listed as well. Previously,
+  we manually detected the installed Go version, and ran an
+  `install_go.sh` script if no Go version was installed. Now,
+  this action is performed automatically as part of the Buildpack process.
+  [cyberark/cloudfoundry-conjur-buildpack#41](https://github.com/cyberark/cloudfoundry-conjur-buildpack/issues/41)
 
 ### Deprecated
 - Support for using the Conjur Buildpack with Conjur Enterprise v4 is now deprecated.
