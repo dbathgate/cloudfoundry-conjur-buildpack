@@ -52,8 +52,18 @@ module CfHelper
     }
   end
 
-  def create_app_manifest(name=cf_ci_buildpack_name)
-    ShellSession.execute(%(sed -e 's|{conjur_buildpack}|#{name}|g' manifest.yml.template > manifest.yml))
+  def create_online_app_manifest
+    ShellSession.execute(
+      %(sed -e 's|{conjur_buildpack}|#{cf_online_buildpack_route}|g' \
+        manifest.yml.template > manifest.yml)
+    )
+  end
+
+  def create_offline_app_manifest
+    ShellSession.execute(
+      %(sed -e 's|{conjur_buildpack}|#{cf_ci_buildpack_name}|g' \
+        manifest.yml.template > manifest.yml)
+    )
   end
 
   def create_org

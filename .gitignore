@@ -9,9 +9,9 @@ conjur_buildpack/
 *.zip
 
 # Integration test artifacts
-tests/integration/
 *.xml
 tests/Gemfile.lock
+tests/**/manifest.yml
 
 # Unit test artifacts
 ./test
