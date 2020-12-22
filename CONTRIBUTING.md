@@ -60,18 +60,21 @@ This will automatically update go.mod and go.sum.
 Commit your changes, and the next time `./buildpack/conjur-env/build.sh` is run the
 `buildpack/vendor/conjur-env`directory will be created with updated dependencies.
 
-When upgrading the version of Go for `conjur-env`, both the pre-built 
-offline version and online version need to be
-updated:
+When upgrading the version of Go for `conjur-env`, the value needs to be updated
+in a few places:
 
-* **Offline build:** Update the base image version in `.buildpack/conjur-env/Dockerfile`
-
-* **Online build:** Update the version and file hashes in `manifest.yml`.
-  Available versions and hashes can be found [here][buildpacks],
-  or see the manifest for the [official Go Buildpack][go-buildpacks].
+* Update the base image in `.buildpack/conjur-env/Dockerfile`
+* Update the Go version in `./buildpack/conjur-env/go.mod`
+* Update the version and file hashes in `manifest.yml` - available versions and
+  hashes can be found [here][buildpacks], or see the manifest for the
+  [official Go Buildpack][go-buildpack]. (This is for the offline version of
+  the buildpack, which is built with buildpack-packager.)
+* Update the version and SHA hash in `buildpack/lib/install_go.sh` -- you can
+  find the available versions and hashes on the [CF dependencies][deps] page.
 
 [buildpacks]: https://buildpacks.cloudfoundry.org/#/buildpacks/
 [go-buildpack]: https://github.com/cloudfoundry/go-buildpack/blob/master/manifest.yml
+[deps]: https://buildpacks.cloudfoundry.org/#/dependencies
 
 ## Testing
 
