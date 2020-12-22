@@ -56,7 +56,8 @@ include_files:
 - VERSION
 - bin/compile
 - bin/supply
-- lib/0001_retrieve-secrets.sh
-- vendor/conjur-env
+- buildpack/lib/0001_retrieve-secrets.sh
+- buildpack/lib/install_go.sh
+- buildpack/vendor/conjur-env
 - manifest.yml
 language: conjur # used solely to name the .zip
