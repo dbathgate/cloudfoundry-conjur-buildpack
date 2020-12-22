@@ -28,11 +28,13 @@ docker run --rm \
   -v $(pwd):/cyberark \
   packager \
   /bin/bash -c """
-  # Create pkg folder that is the repository of the final artefacts
-  mkdir /pkg
-  # Copy the final artefacts to pkg
+  # Create pkg folders that are the repository of the final artifacts
+  mkdir -p /pkg/bin
+  mkdir -p /pkg/buildpack
+  # Copy the final artifacts to pkg
   cp manifest.yml CHANGELOG.md CONTRIBUTING.md LICENSE NOTICES.txt README.md VERSION /pkg
-  cp -R ./buildpack/* /pkg
+  cp bin/supply bin/compile /pkg/bin
+  cp -R ./buildpack/* /pkg/buildpack
   # Run buildpack-packager in /pkg
   pushd /pkg
     buildpack-packager build -any-stack
