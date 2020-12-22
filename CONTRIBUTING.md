@@ -91,7 +91,7 @@ To test your changes within a running instance of [Cloud Foundry Stack](https://
 and Conjur, run:
 
 ```shell script
-./bin/start_dev_environment
+./ci/start_dev_environment
 ```
 
 This starts Conjur and Cloud Foundry Stack containers, and provides terminal
@@ -120,13 +120,13 @@ To run all tests for the `conjur-env` Golang module *and* for
 `buildpack/lib/0001_retrieve-secrets.sh`, you can run:
 
 ```shell script
-./bin/test_unit
+./ci/test_unit
 ```
 
 To run all tests for _only_ the `conjur-env` Golang module, run:
 
 ```shell script
-./bin/test_conjur-env
+./ci/test_conjur-env
 ```
 
 To run all tests for _only_ `0001_retrieve-secrets.sh`, run:
@@ -144,7 +144,7 @@ which are the subset of `cucumber` integration tests not dependent
 on a remote PCF instance or privileged credentials. Run:
 
 ```shell script
-./bin/test_integration
+./ci/test_integration
 ```
 
 This starts Conjur and Cloud Foundry Stack containers, and 
@@ -158,14 +158,14 @@ These are provided as environment variables to the script:
 
 ```shell script
 export CF_API_ENDPOINT=https://api.sys.cloudfoundry.net
-CF_ADMIN_PASSWORD=... ./bin/test_e2e
+CF_ADMIN_PASSWORD=... ./ci/test_e2e
 ```
 
 These variables may also be provided using [Summon](https://cyberark.github.io/summon/)
-by updating the `bin/secrets.yml` file as needed and running:
+by updating the `ci/secrets.yml` file as needed and running:
 
 ```shell script
-summon -f ./bin/secrets.yml ./bin/test_e2e
+summon -f ./ci/secrets.yml ./ci/test_e2e
 ```
 
 This requires access to privileged credentials.
@@ -177,7 +177,7 @@ be cleaned up properly. To clean up leftover components from running
 integration tests on a remote PCF environment, run:
 
 ```shell script
-./bin/clear_ci_artifacts
+./ci/clear_ci_artifacts
 ```
 
 ## Releasing

@@ -22,7 +22,7 @@ pipeline {
 
     stage('Validate Changelog') {
       steps {
-        sh './bin/parse-changelog.sh'
+        sh './ci/parse-changelog.sh'
       }
     }
 
@@ -36,14 +36,14 @@ pipeline {
       parallel {
         stage('Integration Tests') {
           steps {
-            sh './bin/test_integration'
+            sh './ci/test_integration'
             junit 'tests/integration/reports/integration/*.xml'
           }
         }
 
         stage('End To End Tests') {
           steps {
-            sh 'summon -f ./bin/secrets.yml ./bin/test_e2e'
+            sh 'summon -f ./ci/secrets.yml ./ci/test_e2e'
             junit 'tests/integration/reports/e2e/*.xml'
           }
         }
@@ -59,7 +59,7 @@ pipeline {
 
             stage("Conjur-Env Unit Tests") {
               steps {
-                sh './bin/test_conjur-env'
+                sh './ci/test_conjur-env'
                 junit 'buildpack/conjur-env/output/*.xml'
               }
             }
