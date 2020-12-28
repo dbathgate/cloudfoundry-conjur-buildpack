@@ -1,23 +1,20 @@
 #!/bin/bash
 
 # This utility script can generate the conjur-env,
-# placed in the buildpack/vendor directory,
+# placed in the 'vendor' directory,
 # then fully package the buildpack for usage.
 #
 # The buildpack-packager expects all buildpack relevant files
 # and folders to be housed in the top-level directory.
-# To keep a logical divide between our `bin`, and the buildpack `bin`,
-# we move the buildpack relevant files to a `pkg` folder before running
-# buildpack-packager
 
 cd "$(dirname $0)"
 
 echo "Removing previous builds..."
-rm -rf ./buildpack/conjur-env/vendor
+rm -rf ./conjur-env/vendor
 rm -f "conjur_buildpack-v$(cat VERSION)"
 
 echo "Building the conjur-env..."
-./buildpack/conjur-env/build.sh
+./conjur-env/build.sh
 
 echo "Building the image for buildpack-packager..."
 docker build -t packager -f Dockerfile.packager .
@@ -27,18 +24,4 @@ docker run --rm \
   -w /cyberark \
   -v $(pwd):/cyberark \
   packager \
-  /bin/bash -c """
-  # Create pkg folders that are the repository of the final artifacts
-  mkdir -p /pkg/bin
-  mkdir -p /pkg/buildpack
-  # Copy the final artifacts to pkg
-  cp manifest.yml CHANGELOG.md CONTRIBUTING.md LICENSE NOTICES.txt README.md VERSION /pkg
-  cp bin/supply bin/compile /pkg/bin
-  cp -R ./buildpack/* /pkg/buildpack
-  # Run buildpack-packager in /pkg
-  pushd /pkg
-    buildpack-packager build -any-stack
-  popd
-  # Move any created zip files from /pkg to the working directory
-  mv /pkg/*.zip .
-  """
+  /bin/bash -c "buildpack-packager build -any-stack"

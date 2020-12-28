@@ -60,7 +60,7 @@ pipeline {
             stage("Conjur-Env Unit Tests") {
               steps {
                 sh './ci/test_conjur-env'
-                junit 'buildpack/conjur-env/output/*.xml'
+                junit 'conjur-env/output/*.xml'
               }
             }
           }

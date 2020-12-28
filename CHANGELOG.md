@@ -21,10 +21,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   of the Conjur Buildpack `.ZIP`.
   [PR cyberark/cloudfoundry-conjur-buildpack#99](https://github.com/cyberark/cloudfoundry-conjur-buildpack/pull/99)
 - The default go version has been bumped to `1.15.x` in the manifest,
-  with other supported version listed as well. Previously,
-  we manually detected the installed Go version, and ran an
-  `install_go.sh` script if no Go version was installed. Now,
-  this action is performed automatically as part of the Buildpack process.
+  with other supported version listed as well.
   [cyberark/cloudfoundry-conjur-buildpack#41](https://github.com/cyberark/cloudfoundry-conjur-buildpack/issues/41)
 
 ### Deprecated

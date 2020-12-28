@@ -51,25 +51,25 @@ that are included in the `conjur-env` binary in the buildpack,
 make sure you have Go installed locally (at least version 1.12) and run:
 
 ```
-$ cd buildpack/conjur-env/
+$ cd conjur-env/
 $ go get github.com/cyberark/[repo]@v[version]
 ```
 
 This will automatically update go.mod and go.sum.
 
-Commit your changes, and the next time `./buildpack/conjur-env/build.sh` is run the
-`buildpack/vendor/conjur-env`directory will be created with updated dependencies.
+Commit your changes, and the next time `./conjur-env/build.sh` is run the
+`vendor/conjur-env`directory will be created with updated dependencies.
 
 When upgrading the version of Go for `conjur-env`, the value needs to be updated
 in a few places:
 
-* Update the base image in `.buildpack/conjur-env/Dockerfile`
-* Update the Go version in `./buildpack/conjur-env/go.mod`
+* Update the base image in `./conjur-env/Dockerfile`
+* Update the Go version in `./conjur-env/go.mod`
 * Update the version and file hashes in `manifest.yml` - available versions and
   hashes can be found [here][buildpacks], or see the manifest for the
   [official Go Buildpack][go-buildpack]. (This is for the offline version of
   the buildpack, which is built with buildpack-packager.)
-* Update the version and SHA hash in `buildpack/lib/install_go.sh` -- you can
+* Update the version and SHA hash in `lib/install_go.sh` -- you can
   find the available versions and hashes on the [CF dependencies][deps] page.
 
 [buildpacks]: https://buildpacks.cloudfoundry.org/#/buildpacks/
@@ -117,7 +117,7 @@ Unit tests are comprised of two categories:
 - Unit tests for `lib/0001_retrieve-secrets.sh`
 
 To run all tests for the `conjur-env` Golang module *and* for
-`buildpack/lib/0001_retrieve-secrets.sh`, you can run:
+`lib/0001_retrieve-secrets.sh`, you can run:
 
 ```shell script
 ./ci/test_unit
@@ -185,7 +185,7 @@ integration tests on a remote PCF environment, run:
 1. Based on the unreleased content, determine the new version number and update the [VERSION](VERSION) file. This project uses [semantic versioning](https://semver.org/).
 1. Ensure the [changelog](CHANGELOG.md) is up to date with the changes included in the release.
 1. Ensure the [open source acknowledgements](NOTICES.txt) are up to date with
-   the dependencies in the [conjur-env binary](buildpack/conjur-env/go.mod), and
+   the dependencies in the [conjur-env binary](conjur-env/go.mod), and
    update the file if there have been any new or changed dependencies
    since the last release.
 1. Commit these changes - `Bump version to x.y.z` is an acceptable commit message.
