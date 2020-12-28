@@ -12,7 +12,7 @@ DEPS_DIR=$3
 INDEX_DIR=$4
 
 BIN_DIR="$(cd $(dirname "$0"); pwd)"
-BUILDPACK_DIR="$(dirname "${BIN_DIR}")"/buildpack
+BUILDPACK_DIR="$(dirname "${BIN_DIR}")"
 
 echo "[cyberark-conjur-buildpack]: supplying"
 

@@ -17,4 +17,4 @@ tests/**/manifest.yml
 ./test
 tmp/
 tests/retrieve-secrets/temp_clone_dir
-buildpack/conjur-env/output
+conjur-env/output
