@@ -23,6 +23,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - The default go version has been bumped to `1.15.x` in the manifest,
   with other supported version listed as well.
   [cyberark/cloudfoundry-conjur-buildpack#41](https://github.com/cyberark/cloudfoundry-conjur-buildpack/issues/41)
+- Release tags will now be auto-archived in the `latest` branch. Users
+  consuming this buildpack via the online buildpack functionality should now
+  point their manifests to the `latest` branch and only consume release versions
+  of this buildpack.
+  [cyberark/cloudfoundry-conjur-buildpack#101](https://github.com/cyberark/cloudfoundry-conjur-buildpack/issues/101)
 
 ### Deprecated
 - Support for using the Conjur Buildpack with Conjur Enterprise v4 is now deprecated.
