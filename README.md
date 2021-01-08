@@ -206,7 +206,7 @@ repository address instead of specifying the installed buildpack name. This may
 be done with the `cf push` command or using the manifest file.
 
 ```sh
-cf push my-app -b https://github.com/cyberark/cloudfoundry-conjur-buildpack ... -b final_buildpack
+cf push my-app -b https://github.com/cyberark/cloudfoundry-conjur-buildpack#latest ... -b final_buildpack
 ```
 
 ```yaml
@@ -216,8 +216,16 @@ applications:
   services:
   - conjur
   buildpacks:
-  - https://github.com/cyberark/cloudfoundry-conjur-buildpack
+  - https://github.com/cyberark/cloudfoundry-conjur-buildpack#latest
   - ruby_buildpack
+```
+
+We recommend users specifically reference the `latest` branch when using the
+online version of the buildpack. The `latest` branch is up-to-date with the
+latest tagged buildpack release. You may also opt to reference a specific
+release version `TAG` by referring to the online buildpack as:
+```
+https://github.com/cyberark/cloudfoundry-conjur-buildpack#TAG
 ```
 
 ## Contributing
