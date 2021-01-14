@@ -37,13 +37,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   [cyberark/cloudfoundry-conjur-buildpack#73](https://github.com/cyberark/cloudfoundry-conjur-buildpack/issues/73)
 
 ## [2.1.5] - 2020-11-06
-### Added
-- Added sanity tests and additional validation of environment variable keys specified
-  in the `secrets.yml` to ensure compatibility with Bash commands
 
 ### Security
-- Added custom handling to sanitize error messages related to retrieved secrets
-  being exported to the environment
+- Buildpack can no longer expose secret values when the secrets.yml includes an
+  [invalid variable name](https://github.com/cyberark/cloudfoundry-conjur-buildpack/#create-a-secretsyml-file).
+  [Security Advisory](https://github.com/cyberark/cloudfoundry-conjur-buildpack/security/advisories/GHSA-3gqg-6hwf-vq8x)
 
 ## [2.1.4] - 2020-07-16
 
