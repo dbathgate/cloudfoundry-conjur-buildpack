@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Removed
+- Support for using the Buildpack with Conjur Enterprise v4. We recommend
+  users migrate to Dynamic Access Provider v11+ or Conjur OSS v1+.
+  [cyberark/cloudfoundry-conjur-buildpack#86](https://github.com/cyberark/cloudfoundry-conjur-buildpack/issues/86)
+
 ## [2.1.6] - 2020-01-11
 ### Added
 - A [`manifest.yml`](./manifest.yml) has been added, allowing for
