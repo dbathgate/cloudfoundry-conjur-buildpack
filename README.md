@@ -164,6 +164,52 @@ $ cf set-env {Application Name} SECRETS_YAML_PATH {Relative Path to secrets.yml}
 $ cf restage {Application Name}
 ```
 
+##### Using environments in your secrets.yml
+
+One can specify which environment/section to parse from the
+secrets YAML file. In addition, it will also enable the usage of a `common`
+(or `default`) section which will be inherited by other sections/environments.
+In other words, if your secrets.yaml looks something like this:
+
+```yaml
+common:
+  DB_USER: path/to/usernamr
+  DB_NAME: db-name
+  DB_HOST: path/to/host_url
+
+staging:
+  DB_PASS: /path/to/staging_password
+
+production:
+  DB_PASS: path/to/prod_password
+```
+
+You can specify the following in your manifest:
+
+```yaml
+---
+applications:
+- name: my-app
+  services:
+  - conjur
+  buildpacks:
+  - conjur_buildpack
+  - php_buildpack
+  env:
+    SECRETS_YAML_PATH: lib/secrets.yml
+    SECRETS_ENV: staging
+```
+
+With this configuration, the following environment variables would be
+available in the environment:
+
+```shell
+  DB_USER: db-user
+  DB_NAME: db-name
+  DB_HOST: db-host.example.com
+  DB_PASS: staging_password
+```
+
 #### Invoke the Installed Buildpack at Deploy Time
 
 When you deploy your application, ensure it is bound to a Conjur service instance

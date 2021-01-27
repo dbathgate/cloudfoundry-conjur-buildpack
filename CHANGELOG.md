@@ -5,6 +5,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- The `secrets.yml` can now be configured with multiple environment values,
+  allowing the separation of secrets into different "environments" which
+  can be specified through the `manifest.yml` for your deployment. You can
+  find more information in the [README](./README.md#using-environments-in-your-secretsyml).
+  [cyberark/cloudfoundry-conjur-buildpack#44](https://github.com/cyberark/cloudfoundry-conjur-buildpack/issues/44)
 
 ### Removed
 - Support for using the Buildpack with Conjur Enterprise v4. We recommend
