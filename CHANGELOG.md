@@ -19,12 +19,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [2.1.6] - 2020-01-11
 ### Added
-- A [`manifest.yml`](./manifest.yml) has been added, allowing for
-  the usage of [buildpack-packager](https://github.com/cloudfoundry/buildpack-packager)
-  and other native CloudFoundry features. Please refer
-  to [`manifest.yml`](./manifest.yml) for information on
-  dependencies and deprecation notices thereof, as well as a list
-  of files included in the Buildpack.
+- A [`manifest.yml`](https://github.com/cyberark/cloudfoundry-conjur-buildpack/tree/master/manifest.yml)
+  has been added, allowing for the usage of
+  [buildpack-packager](https://github.com/cloudfoundry/buildpack-packager)
+  and other native CloudFoundry features. Please refer to
+  [`manifest.yml`](https://github.com/cyberark/cloudfoundry-conjur-buildpack/tree/master/manifest.yml)
+  for information on dependencies and deprecation notices thereof, as well as
+  a list of files included in the Buildpack.
   [cyberark/cloudfoundry-conjur-buildpack#79](https://github.com/cyberark/cloudfoundry-conjur-buildpack/issues/79)
 
 ### Changed
