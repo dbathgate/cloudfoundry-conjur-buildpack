@@ -4,7 +4,7 @@ applications:
   env:
     CONJUR_BUILDPACK_BYPASS_SERVICE_CHECK: true
     SECRETS_YAML_PATH: lib/secrets.yml
-    SECRETS_ENV: staging
+    SECRETS_YAML_ENVIRONMENT: staging
   buildpacks:
   - {conjur_buildpack}
   - php_buildpack

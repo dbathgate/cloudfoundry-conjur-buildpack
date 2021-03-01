@@ -111,7 +111,7 @@ func main() {
 	if !exists {
 		secretsYamlPath = "secrets.yml"
 	}
-	secretsEnv, exists := os.LookupEnv("SECRETS_ENV")
+	secretsEnv, exists := os.LookupEnv("SECRETS_YAML_ENVIRONMENT")
 	if !exists {
 		secretsEnv = ""
 	}

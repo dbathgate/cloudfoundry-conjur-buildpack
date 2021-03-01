@@ -32,10 +32,10 @@ Given(/^the following command is run:$/) do |multiline_text|
   step "the '#{multiline_text}' command is run"
 end
 
-And(/^The SECRETS_ENV value is '([^"]*)'$/) do |val|
+And(/^The SECRETS_YAML_ENVIRONMENT value is '([^"]*)'$/) do |val|
   @commands ||= []
   @commands << <<~ENV
-    export SECRETS_ENV='#{val}'
+    export SECRETS_YAML_ENVIRONMENT='#{val}'
   ENV
 end
 
