@@ -73,7 +73,7 @@ Feature: profile d script
     prod:
         CONJUR_SINGLE_LINE_SECRET: production_secret
     """
-    And The SECRETS_ENV value is 'dev'
+    And The SECRETS_YAML_ENVIRONMENT value is 'dev'
     When the retrieve secrets profile.d script is sourced
     And the 'env' command is run
     Then the environment contains

@@ -166,10 +166,18 @@ $ cf restage {Application Name}
 
 ##### Using environments in your secrets.yml
 
-One can specify which environment/section to parse from the
-secrets YAML file. In addition, it will also enable the usage of a `common`
-(or `default`) section which will be inherited by other sections/environments.
-In other words, if your secrets.yaml looks something like this:
+Secrets in the `secrets.yml` file can be grouped into sections called
+_environments_. The Conjur Buildpack will inject all secrets in the `common`
+section regardless of the environment the app is running in. To load
+environment-specific secrets at runtime, set the `SECRETS_YAML_ENVIRONMENT`
+environment variable to the string value of the environment's YAML key.
+
+In the example below, the `secrets.yml` file has two custom environments,
+`staging` and `production`. To invoke the buildpack and ask it to inject the
+`staging` secrets into the application environment, the application manifest
+is updated to set `SECRETS_YAML_ENVIRONMENT` to `staging`.
+
+Given a `secrets.yml` file that contains the following:
 
 ```yaml
 common:
@@ -184,7 +192,7 @@ production:
   DB_PASS: path/to/prod_password
 ```
 
-You can specify the following in your manifest:
+Update the application manifest to request the `staging` secrets:
 
 ```yaml
 ---
@@ -197,11 +205,11 @@ applications:
   - php_buildpack
   env:
     SECRETS_YAML_PATH: lib/secrets.yml
-    SECRETS_ENV: staging
+    SECRETS_YAML_ENVIRONMENT: staging
 ```
 
-With this configuration, the following environment variables would be
-available in the environment:
+At runtime, the following environment variables will be available in the
+application environment:
 
 ```shell
   DB_USER: db-user

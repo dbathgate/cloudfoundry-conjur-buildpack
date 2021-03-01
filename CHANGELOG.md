@@ -5,11 +5,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [2.2.0] - 2020-03-01
 ### Added
-- The `secrets.yml` can now be configured with multiple environment values,
-  allowing the separation of secrets into different "environments" which
-  can be specified through the `manifest.yml` for your deployment. You can
-  find more information in the [README](./README.md#using-environments-in-your-secretsyml).
+- Support for using Summon environments in the `secrets.yml` file. Users can now
+  divide their secrets.yml files into environments and specify which
+  environment's secrets should be loaded at runtime using the new
+  `SECRETS_YAML_ENVIRONMENT` environment variable. See the
+  [README](https://github.com/cyberark/cloudfoundry-conjur-buildpack/#using-environments-in-your-secretsyml)
+  for more information.
   [cyberark/cloudfoundry-conjur-buildpack#44](https://github.com/cyberark/cloudfoundry-conjur-buildpack/issues/44)
 
 ### Removed
@@ -135,7 +139,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - The first tagged version.
 
-[Unreleased]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.1.6...HEAD
+[Unreleased]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.2.0...HEAD
+[2.2.0]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.1.6...v2.2.0
 [2.1.6]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.1.5...v2.1.6
 [2.1.5]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.1.4...v2.1.5
 [2.1.4]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.1.3...v2.1.4
