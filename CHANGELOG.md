@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.2.3] - 2022-05-10
+
+### Security
+- Updated sinatra in ruby test app to 2.2.0
+  [cyberark/cloudfoundry-conjur-buildpack#135](https://github.com/cyberark/cloudfoundry-conjur-buildpack/pull/135)
+
 ## [2.2.2] - 2022-01-03
 ### Changed
 - Updated conjur-api-go to version 0.8.1
