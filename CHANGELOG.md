@@ -8,9 +8,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [2.2.3] - 2022-05-10
 
+### Changed
+- Project Go version bumped to 1.17, and support for deprecated Go versions
+  1.14.x and 1.15.x removed.
+  [cyberark/cloudfoundry-conjur-buildpack#137](https://github.com/cyberark/cloudfoundry-conjur-buildpack/pull/137)
+
 ### Security
 - Updated sinatra in ruby test app to 2.2.0
   [cyberark/cloudfoundry-conjur-buildpack#135](https://github.com/cyberark/cloudfoundry-conjur-buildpack/pull/135)
+- Golang-based Docker images bumped to version `1.17.9-stretch`
+  [cyberark/cloudfoundry-conjur-buildpack#137](https://github.com/cyberark/cloudfoundry-conjur-buildpack/pull/137)
 
 ## [2.2.2] - 2022-01-03
 ### Changed
