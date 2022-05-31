@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Project Go version bumped to 1.17, and support for deprecated Go versions
   1.14.x and 1.15.x removed.
   [cyberark/cloudfoundry-conjur-buildpack#137](https://github.com/cyberark/cloudfoundry-conjur-buildpack/pull/137)
+- Updated conjur-api-go to version 0.10.0
+  [cyberark/cloudfoundry-conjur-buildpack#140](https://github.com/cyberark/cloudfoundry-conjur-buildpack/pull/140)
 
 ### Security
 - Updated sinatra in ruby test app to 2.2.0
