@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-## [2.2.3] - 2022-05-10
+## [2.2.3] - 2022-06-07
 
 ### Changed
 - Project Go version bumped to 1.17, and support for deprecated Go versions
@@ -167,7 +167,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - The first tagged version.
 
-[Unreleased]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.2.2...HEAD
+[Unreleased]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.2.3...HEAD
+[2.2.3]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.2.2...v2.2.3
 [2.2.2]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.2.1...v2.2.2
 [2.2.1]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.2.0...v2.2.1
 [2.2.0]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.1.6...v2.2.0
