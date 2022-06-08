@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.2.4] - 2022-06-08
+### Changed
+- Updated conjur-env dependencies to latest versions (github.com/cyberark/summon -> v0.9.2,
+  github.com/stretchr/testify -> v1.7.2)
+  [cyberark/cloudfoundry-conjur-buildpack#143](https://github.com/cyberark/cloudfoundry-conjur-buildpack/pull/143)
+
 ## [2.2.3] - 2022-06-07
 
 ### Changed
