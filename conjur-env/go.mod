@@ -1,7 +1,7 @@
 module github.com/cyberark/cloudfoundry-conjur-buildpack/conjur-env
 
 require (
-	github.com/cyberark/conjur-api-go v0.10.0
+	github.com/cyberark/conjur-api-go v0.10.1
 	github.com/cyberark/summon v0.9.2
 	github.com/stretchr/testify v1.7.2
 )

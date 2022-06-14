@@ -10,7 +10,7 @@ of the license associated with each component.
 
 SECTION 1: Apache License 2.0
 
->>> github.com/cyberark/conjur-api-go-0.10.0
+>>> github.com/cyberark/conjur-api-go-0.10.1
 >>> gopkg.in/yaml.v2-2.4.0
 >>> gopkg.in/yaml.v3-3.0.0-20210107192922-496545a6307b
 
@@ -47,7 +47,7 @@ APPENDIX: Standard License Files and Templates
 
 Apache License 2.0 is applicable to the following component(s).
 
->>> github.com/cyberark/conjur-api-go-0.10.0
+>>> github.com/cyberark/conjur-api-go-0.10.1
 
 Copyright 2020 CyberArk Software Ltd.
 
