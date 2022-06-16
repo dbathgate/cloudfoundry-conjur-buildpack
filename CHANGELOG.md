@@ -5,9 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-
-## [2.2.4] - 2022-06-08
 ### Changed
+- Updated conjur-api-go to 0.10.1 and summon to 0.9.3 in conjur-env/go.mod
+  [cyberark/cloudfoundry-conjur-buildpack#145](https://github.com/cyberark/cloudfoundry-conjur-buildpack/pull/145)
 - Updated Spring in tests/integration/apps/java to 2.7.0
   [cyberark/cloudfoundry-conjur-buildpack#144](https://github.com/cyberark/cloudfoundry-conjur-buildpack/pull/144)
 - Updated conjur-env dependencies to latest versions (github.com/cyberark/summon -> v0.9.2,
