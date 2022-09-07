@@ -2,8 +2,8 @@ module github.com/cyberark/cloudfoundry-conjur-buildpack/conjur-env
 
 require (
 	github.com/cyberark/conjur-api-go v0.10.1
-	github.com/cyberark/summon v0.9.3
-	github.com/stretchr/testify v1.7.2
+	github.com/cyberark/summon v0.9.4
+	github.com/stretchr/testify v1.8.0
 )
 
 require (
@@ -13,6 +13,7 @@ require (
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/rogpeppe/go-internal v1.8.1 // indirect
 	github.com/sirupsen/logrus v1.8.1 // indirect
+	github.com/stretchr/objx v0.4.0 // indirect
 	golang.org/x/sys v0.0.0-20211216021012-1d35b9e2eb4e // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect

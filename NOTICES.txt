@@ -22,9 +22,9 @@ SECTION 2: BSD 3-clause "New" or "Revised" License
 SECTION 3: MIT License
 
 >>> github.com/bgentry/go-netrc-0.0.0-20140422174119-9fd32a8b3d3d
->>> github.com/cyberark/summon-0.9.3
+>>> github.com/cyberark/summon-0.9.4
 >>> github.com/sirupsen/logrus-1.8.1
->>> github.com/stretchr/testify v1.7.2
+>>> github.com/stretchr/testify v1.8.0
 >>> gopkg.in/yaml.v2-2.4.0
 >>> gopkg.in/yaml.v3-3.0.0-20210107192922-496545a6307b
 
@@ -198,7 +198,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
->>> github.com/cyberark/summon-0.9.3
+>>> github.com/cyberark/summon-0.9.4
 
 The MIT License (MIT)
 
@@ -246,7 +246,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
->>> github.com/stretchr/testify v1.7.2
+>>> github.com/stretchr/testify v1.8.0
 
 Copyright (c) 2012-2020 Mat Ryer, Tyler Bunnell and contributors.
 
