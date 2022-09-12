@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 
 ### Changed
-- - Updated conjur-env dependencies to latest versions (github.com/cyberark/summon -> v0.9.4,
+- Added replace statement to prune gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c from
+  dependency tree in favor of v3.0.1 [cyberark/cloudfoundry-conjur-buildpack#152](https://github.com/cyberark/cloudfoundry-conjur-buildpack/pull/152)
+- Updated conjur-env dependencies to latest versions (github.com/cyberark/summon -> v0.9.4,
   github.com/stretchr/testify -> v1.8.0) [cyberark/cloudfoundry-conjur-buildpack#149](https://github.com/cyberark/cloudfoundry-conjur-buildpack/pull/149)
 
 ## [2.2.4] - 2022-06-16
