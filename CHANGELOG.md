@@ -14,6 +14,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Updated conjur-env dependencies to latest versions (github.com/cyberark/summon -> v0.9.4,
   github.com/stretchr/testify -> v1.8.0) [cyberark/cloudfoundry-conjur-buildpack#149](https://github.com/cyberark/cloudfoundry-conjur-buildpack/pull/149)
 
+### Security
+- Updated tests/integration/apps/java to use Spring Framework 2.7.5
+  [cyberark/cloudfoundry-conjur-buildpack#155](https://github.com/cyberark/cloudfoundry-conjur-buildpack/pull/155)
+
 ## [2.2.4] - 2022-06-16
 ### Changed
 - Updated conjur-api-go to 0.10.1 and summon to 0.9.3 in conjur-env/go.mod
