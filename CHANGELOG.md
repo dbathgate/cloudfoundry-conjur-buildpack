@@ -15,6 +15,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   github.com/stretchr/testify -> v1.8.0) [cyberark/cloudfoundry-conjur-buildpack#149](https://github.com/cyberark/cloudfoundry-conjur-buildpack/pull/149)
 
 ### Security
+- Updated Summon, golang.org/x/net, and golang.org/x/text dependencies
+  [cyberark/cloudfoundry-conjur-buildpack#156](https://github.com/cyberark/cloudfoundry-conjur-buildpack/pull/156)
 - Updated tests/integration/apps/java to use Spring Framework 2.7.5
   [cyberark/cloudfoundry-conjur-buildpack#155](https://github.com/cyberark/cloudfoundry-conjur-buildpack/pull/155)
 
