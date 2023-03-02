@@ -12,9 +12,6 @@ function announce {
 }
 
 function finish {
-  announce 'Dumping Conjur logs...'
-  docker-compose -f "$DOCKER_COMPOSE_FILE" logs --tail="all" conjur
-
   announce 'Removing environment...'
   docker-compose -f "$DOCKER_COMPOSE_FILE" down -v
 }

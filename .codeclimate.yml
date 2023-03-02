@@ -16,6 +16,7 @@ plugins:
         go:
         java:
         javascript:
+        php:
         python:
           python_version: 3  # ACTION Comment this out if using Python 2
         ruby:
