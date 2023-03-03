@@ -5,9 +5,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [2.2.7] - 2023-03-02
 ### Security
+- Upgdate spring-boot and Golang dependencies. Upgrade test app to Ruby 3 and update ruby dependencies.
+  [cyberark/cloudfoundry-conjur-buildpack#164](https://github.com/cyberark/cloudfoundry-conjur-buildpack/pull/164)
 - Upgrade sinatra to 2.2.3 in /tests/integration/apps/ruby to resolve CVE-2022-45442
-  [cyberark/cloudfoundry-conjur-buildpack](https://github.com/cyberark/cloudfoundry-conjur-buildpack/pull/159)
+  [cyberark/cloudfoundry-conjur-buildpack#159](https://github.com/cyberark/cloudfoundry-conjur-buildpack/pull/159)
 
 ## [2.2.6] - 2022-11-23
 ### Changed
@@ -197,7 +201,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - The first tagged version.
 
-[Unreleased]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.2.6...HEAD
+[Unreleased]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.2.7...HEAD
+[2.2.7]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.2.6...v2.2.7
 [2.2.6]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.2.5...v2.2.6
 [2.2.5]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.2.4...v2.2.5
 [2.2.4]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.2.3...v2.2.4
