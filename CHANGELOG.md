@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.2.8] - 2023-04-25
+### Security
+- Update ruby in ci/parse-changelog.sh from 2.5 to 3.1
+  [cyberark/cloudfoundry-conjur-buildpack#170](https://github.com/cyberark/cloudfoundry-conjur-buildpack/pull/170)
+
 ## [2.2.7] - 2023-03-02
 ### Security
 - Upgdate spring-boot and Golang dependencies. Upgrade test app to Ruby 3 and update ruby dependencies.
