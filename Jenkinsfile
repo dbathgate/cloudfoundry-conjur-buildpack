@@ -23,7 +23,7 @@ pipeline {
 
     stage('Validate Changelog') {
       steps {
-        sh './ci/parse-changelog.sh'
+        parseChangelog()
       }
     }
 
