@@ -6,13 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.2.8] - 2023-06-21
 ### Security
 - Upgrade golang.org/x/net to v0.10.0, golang.org/x/text to v0.9.0, golang.org/x/sys to v0.8.0, rack to 3.0.1,
   spring-boot to 3.0.6, and java to 17
   [cyberark/cloudfoundry-conjur-buildpack#172](https://github.com/cyberark/cloudfoundry-conjur-buildpack/pull/172)
-
-## [2.2.8] - 2023-04-25
-### Security
 - Update ruby in ci/parse-changelog.sh from 2.5 to 3.1
   [cyberark/cloudfoundry-conjur-buildpack#170](https://github.com/cyberark/cloudfoundry-conjur-buildpack/pull/170)
 
@@ -211,7 +209,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - The first tagged version.
 
-[Unreleased]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.2.7...HEAD
+[Unreleased]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.2.8...HEAD
+[2.2.8]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.2.7...v2.2.8
 [2.2.7]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.2.6...v2.2.7
 [2.2.6]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.2.5...v2.2.6
 [2.2.5]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.2.4...v2.2.5
