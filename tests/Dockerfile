@@ -10,7 +10,12 @@ RUN apt-get update && \
     apt-get install -y apt-transport-https \
                        ca-certificates \
                        openssl \
-                       ruby2.5-dev
+                       software-properties-common
+
+# Install Ruby 2.5
+RUN apt-add-repository ppa:brightbox/ruby-ng && \
+    apt-get update && \
+    apt-get install -y ruby2.5-dev
 
 # Install the Cloud Foundry CLI
 RUN wget -q https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.key && \
