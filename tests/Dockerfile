@@ -1,4 +1,4 @@
-FROM cloudfoundry/cflinuxfs3
+FROM cloudfoundry/cflinuxfs4
 
 ENV WD_PATH="/cyberark/cloudfoundry-conjur-buildpack" \
     TEST_PATH="/cyberark/cloudfoundry-conjur-buildpack/tests"
@@ -10,12 +10,7 @@ RUN apt-get update && \
     apt-get install -y apt-transport-https \
                        ca-certificates \
                        openssl \
-                       software-properties-common
-
-# Install Ruby 2.5
-RUN apt-add-repository ppa:brightbox/ruby-ng && \
-    apt-get update && \
-    apt-get install -y ruby2.5-dev
+                       ruby-dev
 
 # Install the Cloud Foundry CLI
 RUN wget -q https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.key && \

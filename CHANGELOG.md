@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+- Support for TAS 4.0 and 5.0, and associated `cflinuxfs4` stack.
+  [cyberark/cloudfoundry-conjur-buildpack#178](https://github.com/cyberark/cloudfoundry-conjur-buildpack/pull/178)
+
+### Changed
+- Project Go version bumped to 1.20, and support for deprecated Go version 1.17 removed.
+  [cyberark/cloudfoundry-conjur-buildpack#178](https://github.com/cyberark/cloudfoundry-conjur-buildpack/pull/178)
+
 ## [2.2.8] - 2023-06-21
 ### Security
 - Upgrade golang.org/x/net to v0.10.0, golang.org/x/text to v0.9.0, golang.org/x/sys to v0.8.0, rack to 3.0.1,
