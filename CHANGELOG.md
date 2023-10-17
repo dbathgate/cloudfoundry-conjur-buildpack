@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.3.0] - 2023-10-06
 ### Added
 - Support for TAS 4.0 and 5.0, and associated `cflinuxfs4` stack.
   [cyberark/cloudfoundry-conjur-buildpack#178](https://github.com/cyberark/cloudfoundry-conjur-buildpack/pull/178)
@@ -217,7 +218,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - The first tagged version.
 
-[Unreleased]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.2.8...HEAD
+[Unreleased]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.3.0...HEAD
+[2.3.0]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.2.8...v2.3.0
 [2.2.8]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.2.7...v2.2.8
 [2.2.7]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.2.6...v2.2.7
 [2.2.6]: https://github.com/cyberark/cloudfoundry-conjur-buildpack/compare/v2.2.5...v2.2.6
