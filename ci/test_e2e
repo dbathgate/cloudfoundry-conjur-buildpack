@@ -47,6 +47,18 @@ pushd ../tests/integration/apps/java
   ./bin/build
 popd
 
+feature_tags="@integration"
+
+if [[ "${E2E_TEST_WINDOWS}" == "true" ]]; then
+
+  announce 'Building the Dotnet Windows test application...'
+  pushd ../tests/integration/apps/dotnet-windows
+    ./build
+  popd
+
+  feature_tags="${feature_tags} or @integration-windows"
+fi 
+
 announce 'Running Cucumber tests...'
 # Run tests against latest build of buildpack (including integration tests against remote foundation)
 docker compose \
@@ -58,4 +70,4 @@ docker compose \
     --format pretty \
     --format junit \
     --out "./reports/e2e" \
-    --tags '@integration'
+    --tags "$feature_tags"

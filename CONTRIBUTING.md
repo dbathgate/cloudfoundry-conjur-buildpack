@@ -161,6 +161,15 @@ export CF_API_ENDPOINT=https://api.sys.cloudfoundry.net
 CF_ADMIN_PASSWORD=... ./ci/test_e2e
 ```
 
+To include the end-to-end tests targeting a Windows application running
+on Cloud Foundry, add an additional environment variable.
+
+```shell script
+export CF_API_ENDPOINT=https://api.sys.cloudfoundry.net
+export E2E_TEST_WINDOWS=true
+CF_ADMIN_PASSWORD=... ./ci/test_e2e
+```
+
 These variables may also be provided using [Summon](https://cyberark.github.io/summon/)
 by updating the `ci/secrets.yml` file as needed and running:
 
