@@ -26,8 +26,8 @@ Feature: Integrations Tests for remote TAS foundation
       When I push a "java" app with the "offline" buildpack
       Then the secrets.yml values are available in the app
 
-#    # The online buildpack tests are only valid if the latest commits
-#    # are push to the Github remote branch.
+    # The online buildpack tests are only valid if the latest commits
+    # are push to the Github remote branch.
     Scenario: Python online buildpack integration
       When I push a "python" app with the "online" buildpack
       Then the secrets.yml values are available in the app
